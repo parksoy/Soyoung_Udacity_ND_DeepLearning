@@ -1,4 +1,8 @@
+
 import numpy as np
+print("tell me why this doesnt work")
+import os
+print(os.getcwd())
 
 def sigmoid(x):
     """Calculate sigmoid"""
