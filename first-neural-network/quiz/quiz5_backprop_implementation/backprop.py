@@ -68,12 +68,16 @@ for e in range(epochs):
         if last_loss and last_loss < loss:
             print("Train loss: ", loss, "  WARNING - Loss Increasing")
         else:
+
+            print("out:", out)
             print("Train loss: ", loss)
         last_loss = loss
 
 # Calculate accuracy on test data
 hidden = sigmoid(np.dot(features_test, weights_input_hidden))
 out = sigmoid(np.dot(hidden, weights_hidden_output))
-predictions = out > 0.5
+print("out=",out)
+print("out > 0.5", out > 0.5)
+predictions = out > 0.5 #this converts to 1,0 target
 accuracy = np.mean(predictions == targets_test)
 print("Prediction accuracy: {:.3f}".format(accuracy))
