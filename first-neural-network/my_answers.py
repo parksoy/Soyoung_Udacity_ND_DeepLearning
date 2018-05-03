@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class NeuralNetwork(object):
     def __init__(self, input_nodes, hidden_nodes, output_nodes, learning_rate):
         # Set number of nodes in input, hidden and output layers.
@@ -65,12 +64,11 @@ class NeuralNetwork(object):
         ### Forward pass ###
         # TODO: Hidden layer - Replace these values with your calculations.
         hidden_inputs = np.dot(X, self.weights_input_to_hidden) # signals into hidden layer
-        hidden_outputs = sigmoid(hidden_input) # signals from hidden layer
+        hidden_outputs = self.activation_function(-hidden_inputs) # signals from hidden layer
 
         # TODO: Output layer - Replace these values with your calculations.
-        final_inputs = hidden_outputs # signals into final output layer
-        final_outputs = sigmoid(np.dot(final_inputs,
-                                self.weights_hidden_to_output)) # signals from final output layer
+        final_inputs = np.dot(hidden_outputs,self.weights_hidden_to_output) # signals into final output layer
+        final_outputs = self.activation_function(-final_inputs) # signals from final output layer
 
         return final_outputs, hidden_outputs
 
@@ -92,19 +90,26 @@ class NeuralNetwork(object):
         error = y - final_outputs # Output layer error is the difference between desired target and actual output.
 
         # TODO: Calculate the hidden layer's contribution to the error
-        output_error_term = error * final_outputs * (1 - final_outputs)
-        hidden_error = np.dot(output_error_term, self.weights_hidden_to_output)
+        output_error_term = error * final_outputs * (1 - final_outputs) #(1,)
+        print("output_error_term",output_error_term.shape) #(1,)
+
+        hidden_error = self.weights_hidden_to_output * output_error_term  #(2, 1) (self.hidden_nodes, self.output_nodes)
+        print("self.weights_hidden_to_output", self.weights_hidden_to_output.shape) #(2, 1)
+        print("hidden_error", hidden_error.shape) #(2, 1, 1)
 
         # TODO: Backpropagated error terms - Replace these values with your calculations.
 
-
         hidden_error_term = hidden_error * hidden_outputs * (1 - hidden_outputs)
+        print("hidden_error_term", hidden_error_term.shape)
 
 
         # Weight step (input to hidden)
         delta_weights_i_h += hidden_error_term * X[:, None]
+
         # Weight step (hidden to output)
         delta_weights_h_o += output_error_term * hidden_outputs
+        print("delta_weights_h_o", delta_weights_h_o.shape)
+
         return delta_weights_i_h, delta_weights_h_o
 
     def update_weights(self, delta_weights_i_h, delta_weights_h_o, n_records):
@@ -117,8 +122,8 @@ class NeuralNetwork(object):
             n_records: number of records
 
         '''
-        self.weights_hidden_to_output += learning_rate * delta_weights_h_o / n_records # update hidden-to-output weights with gradient descent step
-        self.weights_input_to_hidden += learning_rate * delta_weights_i_h / n_records # update input-to-hidden weights with gradient descent step
+        self.weights_hidden_to_output += self.lr  * delta_weights_h_o / n_records # update hidden-to-output weights with gradient descent step
+        self.weights_input_to_hidden += self.lr  * delta_weights_i_h / n_records # update input-to-hidden weights with gradient descent step
 
     def run(self, features):
         ''' Run a forward pass through the network with input features
@@ -130,12 +135,12 @@ class NeuralNetwork(object):
 
         #### Implement the forward pass here ####
         # TODO: Hidden layer - replace these values with the appropriate calculations.
-        hidden_inputs = np.dot(x, weights_input_hidden) # signals into hidden layer
-        hidden_outputs = sigmoid(hidden_input) # signals from hidden layer
+        hidden_inputs = np.dot(features, self.weights_input_to_hidden) # signals into hidden layer
+        hidden_outputs = self.activation_function(-hidden_inputs) # signals from hidden layer
 
         # TODO: Output layer - Replace these values with the appropriate calculations.
-        final_inputs = hidden_outputs # signals into final output layer
-        final_outputs = sigmoid(np.dot(hidden_output,weights_hidden_output))
+        final_inputs = np.dot(hidden_outputs, self.weights_hidden_to_output) # signals into final output layer
+        final_outputs = self.activation_function(-final_inputs)
 
         # signals from final output layer
 
