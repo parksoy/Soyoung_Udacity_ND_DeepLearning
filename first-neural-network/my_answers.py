@@ -29,14 +29,20 @@ class NeuralNetwork(object):
 
     def backpropagation(self, final_outputs, hidden_outputs, X, y, delta_weights_i_h, delta_weights_h_o): #''' Implement backpropagation-final_outputs: output from forward pass-y: target (i.e. label) batch-delta_weights_i_h: change in weights from input to hidden layers-delta_weights_h_o: change in weights from hidden to output layers'''
         error = y - final_outputs # (1,1) Output layer error is the difference between desired target and actual output.# TODO: Output error - Replace this value with your calculations.
-        hidden_error = np.dot(error, self.weights_hidden_to_output.T)  # (1,1), (1,2)=(1,2)
-
         output_error_term = error  # (1,1) # TODO: Calculate the hidden layer's contribution to the error ##Reviewer#1 pointed
-        hidden_error_term = hidden_error * hidden_outputs * (1 - hidden_outputs)  #(1,1), (1,2)=(1,2) #TODO: Backpropagated error terms - Replace these values with your calculations.
 
-        delta_weights_i_h += (hidden_error_term.T * X[None,:]).T # (2,1), (1,3)=(3,2) # Weight step (input to hidden)
-        delta_weights_h_o += (output_error_term * hidden_outputs).T  # (1,1)(1,2)=(2,1) # Weight step (hidden to output)
+        hidden_error = np.dot(output_error_term, self.weights_hidden_to_output.T)  # (1,1), (1,2)=(1,2)
+        #Reviewer 1 hinted * and np.dot operation are totally different!
+        hidden_error_term = hidden_error * hidden_outputs * (1 - hidden_outputs)  #(1,2)*(1,2)*()=(1,2) #TODO: Backpropagated error terms - Replace these values with your calculations.
+        #[[-0.007632  0.008496]]= [[ 0.12 -0.04]] *[[-0.06 -0.18]]*(1-[[-0.06 -0.18]])
 
+        delta_weights_i_h += hidden_error_term * X[:,None] # (1,2), (1,3)=(3,2) # Weight step (input to hidden)
+        #[[-0.007632  0.008496]] * [[ 0.5]  = [[-0.003816   0.004248 ]
+                                 #   [-0.2]    #[ 0.0015264 -0.0016992]
+                                 #   [ 0.1]]   #[-0.0007632  0.0008496]]
+
+        delta_weights_h_o += output_error_term * hidden_outputs.T # (1,1)*(1,2)=(1,2) # Weight step (hidden to output)
+        #[[0.4]]* [[-0.06 -0.18]].T = (2,1)
         return delta_weights_i_h, delta_weights_h_o
 
     def update_weights(self, delta_weights_i_h, delta_weights_h_o, n_records): #''' Update weights on gradient descent step-delta_weights_i_h: change in weights from input to hidden layers-delta_weights_h_o: change in weights from hidden to output layers-n_records: number of records'''
@@ -53,7 +59,7 @@ class NeuralNetwork(object):
 #########################################################
 # Set your hyperparameters here
 ##########################################################
-iterations = 100
+iterations = 1000
 learning_rate = 0.1
-hidden_nodes = 2
+hidden_nodes = 25
 output_nodes = 1
