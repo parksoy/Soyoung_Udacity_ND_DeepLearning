@@ -21,18 +21,18 @@ class NeuralNetwork(object):
 
     def forward_pass_train(self, X): #X= (3,) ''' Implement forward pass here-X: features batch'''
         hidden_inputs = np.dot(self.weights_input_to_hidden.T, X[:,None]).T #(2,3)(3,1)=(1,2) signals into hidden layer# TODO: Hidden layer - Replace these values with your calculations.
-        hidden_outputs = self.activation_function(-hidden_inputs) # (1,2) signals from hidden layer
+        hidden_outputs = hidden_inputs # (1,2) signals from hidden layer:##Reviewer#1:You should not apply an activation in the final layer, because this is a regression problem.
 
         final_inputs = np.dot(hidden_outputs, self.weights_hidden_to_output ) #(1,2), (2,1)=(1,1) signals into final output layer# TODO: Output layer - Replace these values with your calculations.
-        final_outputs = self.activation_function(-final_inputs) # (1,1) signals from final output layer
+        final_outputs = final_inputs # (1,1) signals from final output layer
         return final_outputs, hidden_outputs
 
     def backpropagation(self, final_outputs, hidden_outputs, X, y, delta_weights_i_h, delta_weights_h_o): #''' Implement backpropagation-final_outputs: output from forward pass-y: target (i.e. label) batch-delta_weights_i_h: change in weights from input to hidden layers-delta_weights_h_o: change in weights from hidden to output layers'''
         error = y - final_outputs # (1,1) Output layer error is the difference between desired target and actual output.# TODO: Output error - Replace this value with your calculations.
-        hidden_error = error*(self.weights_hidden_to_output.T)  # (1,1), (1,2)=(1,2)
+        hidden_error = np.dot(error, self.weights_hidden_to_output.T)  # (1,1), (1,2)=(1,2)
 
-        output_error_term = error * final_outputs * (1 - final_outputs) # (1,1) # TODO: Calculate the hidden layer's contribution to the error
-        hidden_error_term = np.dot(np.sum(hidden_error) , hidden_outputs * (1 - hidden_outputs))  #(1,1), (1,2)=(1,2) #TODO: Backpropagated error terms - Replace these values with your calculations.
+        output_error_term = error  # (1,1) # TODO: Calculate the hidden layer's contribution to the error ##Reviewer#1 pointed
+        hidden_error_term = hidden_error * hidden_outputs * (1 - hidden_outputs)  #(1,1), (1,2)=(1,2) #TODO: Backpropagated error terms - Replace these values with your calculations.
 
         delta_weights_i_h += (hidden_error_term.T * X[None,:]).T # (2,1), (1,3)=(3,2) # Weight step (input to hidden)
         delta_weights_h_o += (output_error_term * hidden_outputs).T  # (1,1)(1,2)=(2,1) # Weight step (hidden to output)
