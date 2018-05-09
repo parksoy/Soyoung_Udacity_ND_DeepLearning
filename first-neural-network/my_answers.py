@@ -20,7 +20,7 @@ class NeuralNetwork(object):
         self.update_weights(delta_weights_i_h, delta_weights_h_o, n_records)
 
     def forward_pass_train(self, X): #X= (3,) ''' Implement forward pass here-X: features batch'''
-        hidden_inputs = np.dot(self.weights_input_to_hidden.T, X[:,None]).T #(2,3)(3,1)=(1,2) signals into hidden layer# TODO: Hidden layer - Replace these values with your calculations.
+        hidden_inputs = np.dot(X[None,:], self.weights_input_to_hidden) #(1,3)(3,1)=(1,2) signals into hidden layer# TODO: Hidden layer - Replace these values with your calculations.
         hidden_outputs = hidden_inputs # (1,2) signals from hidden layer:##Reviewer#1:You should not apply an activation in the final layer, because this is a regression problem.
 
         final_inputs = np.dot(hidden_outputs, self.weights_hidden_to_output ) #(1,2), (2,1)=(1,1) signals into final output layer# TODO: Output layer - Replace these values with your calculations.
@@ -46,20 +46,20 @@ class NeuralNetwork(object):
         return delta_weights_i_h, delta_weights_h_o
 
     def update_weights(self, delta_weights_i_h, delta_weights_h_o, n_records): #''' Update weights on gradient descent step-delta_weights_i_h: change in weights from input to hidden layers-delta_weights_h_o: change in weights from hidden to output layers-n_records: number of records'''
-        self.weights_hidden_to_output += self.lr  * delta_weights_h_o / n_records # update hidden-to-output weights with gradient descent step
-        self.weights_input_to_hidden += self.lr  * delta_weights_i_h / n_records # update input-to-hidden weights with gradient descent step
+        self.weights_hidden_to_output += self.lr  * delta_weights_h_o / (n_records) # update hidden-to-output weights with gradient descent step
+        self.weights_input_to_hidden += self.lr  * delta_weights_i_h / (n_records) # update input-to-hidden weights with gradient descent step
 
     def run(self, features): #features (1, 3) ''' Run a forward pass through the network with input features-features: 1D array of feature values'''
         hidden_inputs = np.dot(features, self.weights_input_to_hidden) #(1,3),(3,2)=(1,2) )# signals into hidden layer# TODO: Hidden layer - replace these values with the appropriate calculations.
-        hidden_outputs = self.activation_function(-hidden_inputs) # (1,2)# signals from hidden layer
+        hidden_outputs = hidden_inputs # (1,2)# signals from hidden layer
         final_inputs = np.dot(hidden_outputs, self.weights_hidden_to_output) #(1,2)* (2,1)=(1,1)# signals into final output layer# TODO: Output layer - Replace these values with the appropriate calculations.
-        final_outputs = self.activation_function(-final_inputs)# signals from final output layer
+        final_outputs = final_inputs# signals from final output layer
         return final_outputs
 
 #########################################################
 # Set your hyperparameters here
 ##########################################################
-iterations = 1000
+iterations = 250
 learning_rate = 0.1
 hidden_nodes = 25
 output_nodes = 1
