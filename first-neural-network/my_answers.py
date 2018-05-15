@@ -20,10 +20,13 @@ class NeuralNetwork(object):
         self.update_weights(delta_weights_i_h, delta_weights_h_o, n_records)
 
     def forward_pass_train(self, X): #X= (3,) ''' Implement forward pass here-X: features batch'''
-        hidden_inputs = np.dot(X[None,:], self.weights_input_to_hidden) #(1,3)(3,1)=(1,2) signals into hidden layer# TODO: Hidden layer - Replace these values with your calculations.
+        hidden_inputs = np.dot(X, self.weights_input_to_hidden) #(1,3)(3,2)=(1,2) signals into hidden layer# TODO: Hidden layer - Replace these values with your calculations.
+        #print("X",X, X.shape)
+        #print("self.weights_input_to_hidden",self.weights_input_to_hidden)
+        #print("hidden_inputs", hidden_inputs)
         hidden_outputs = self.activation_function(hidden_inputs) # (1,2) signals from hidden layer:##Reviewer#1:You should not apply an activation in the final layer, because this is a regression problem.
-
-        final_inputs = np.dot(hidden_outputs, self.weights_hidden_to_output ) #(1,2), (2,1)=(1,1) signals into final output layer# TODO: Output layer - Replace these values with your calculations.
+        #print("hidden_outputs", hidden_outputs)
+        final_inputs = np.dot(hidden_outputs, self.weights_hidden_to_output) #(1,2), (2,1)=(1,1) signals into final output layer # TODO: Output layer - Replace these values with your calculations.
         final_outputs = final_inputs # (1,1) signals from final output layer
         return final_outputs, hidden_outputs
 
@@ -41,7 +44,7 @@ class NeuralNetwork(object):
                                  #   [-0.2]    #[ 0.0015264 -0.0016992]
                                  #   [ 0.1]]   #[-0.0007632  0.0008496]]
 
-        delta_weights_h_o += output_error_term * hidden_outputs.T # (1,1)*(1,2)=(1,2) # Weight step (hidden to output)
+        delta_weights_h_o += output_error_term * hidden_outputs[:,None]  # (1,1)*(1,2)=(1,2) # Weight step (hidden to output)
         #[[0.4]]* [[-0.06 -0.18]].T = (2,1)
         return delta_weights_i_h, delta_weights_h_o
 
@@ -59,7 +62,7 @@ class NeuralNetwork(object):
 #########################################################
 # Set your hyperparameters here
 ##########################################################
-iterations = 1000
-learning_rate = 0.1
-hidden_nodes = 25
+iterations = 4000
+learning_rate = 0.5
+hidden_nodes = 28
 output_nodes = 1
