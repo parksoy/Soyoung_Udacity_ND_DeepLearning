@@ -17,3 +17,4 @@ face_generation/data/
 *.zip
 *.npz
 *.data-00000-of-00001
+*.CEF
