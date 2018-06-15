@@ -4,17 +4,24 @@
 embeddings/data/
 embeddings/text8.zip
 face_generation/data/
+dog-project/lfw/*
 
 .ipynb_checkpoints/
 
 
 *.pyc
 *.p
-*.pkl 
+*.pkl
+*.gz
 
 */.floyd*
+
 
 *.zip
 *.npz
 *.data-00000-of-00001
 *.CEF
+*.jpg
+transfer-learning/flower_photos/LICENSE.txt
+transfer-learning/tensorflow_vgg/vgg16.npy
+reinforcement/gym/
