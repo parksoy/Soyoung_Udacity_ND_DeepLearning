@@ -23,6 +23,7 @@ def test_create_lookup_tables(create_lookup_tables):
         test_text = test_text.split()
 
         vocab_to_int, int_to_vocab = create_lookup_tables(test_text)
+        print("within testunit, vocab_to_int=", vocab_to_int)
 
         # Check types
         assert isinstance(vocab_to_int, dict),\
