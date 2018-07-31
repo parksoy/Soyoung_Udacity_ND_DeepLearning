@@ -1,0 +1,1559 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Deep\_Q-learning-cart\_DQN\_using\_tensorflow}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{In conda env openAI}\label{in-conda-env-openai}
+
+\section{sudo -H pip install
+python=3.5}\label{sudo--h-pip-install-python3.5}
+
+\section{sudo -H pip install
+tensorflow==1.3}\label{sudo--h-pip-install-tensorflow1.3}
+
+Also Kernel should be openAI
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PYZpc{}\PYZpc{}bash
+        \PY{n+nb}{pwd}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/Users/parksoy/Desktop/Soyoung\_Udacity\_ND\_DeepLearning/6.Deep\_Reinforcement\_Learning/gym
+
+    \end{Verbatim}
+
+    \section{\texorpdfstring{Deep
+\(Q\)-learning}{Deep Q-learning}}\label{deep-q-learning}
+
+In this notebook, we'll build a neural network that can learn to play
+games through reinforcement learning. More specifically, we'll use
+\(Q\)-learning to train an agent to play a game called
+\href{https://gym.openai.com/envs/CartPole-v0}{Cart-Pole}. In this game,
+a freely swinging pole is attached to a cart. The cart can move to the
+left and right, and the goal is to keep the pole upright as long as
+possible.
+
+\begin{figure}
+\centering
+\includegraphics{assets/cart-pole.jpg}
+\caption{Cart-Pole}
+\end{figure}
+
+We can simulate this game using
+\href{https://github.com/openai/gym}{OpenAI Gym}. First, let's check out
+how OpenAI Gym works. Then, we'll get into training an agent to play the
+Cart-Pole game.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k+kn}{import} \PY{n+nn}{gym}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        
+        \PY{c+c1}{\PYZsh{} Create the Cart\PYZhy{}Pole game environment}
+        \PY{n}{env} \PY{o}{=} \PY{n}{gym}\PY{o}{.}\PY{n}{make}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CartPole\PYZhy{}v1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Number of possible actions}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of possible actions:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{env}\PY{o}{.}\PY{n}{action\PYZus{}space}\PY{o}{.}\PY{n}{n}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\textcolor{ansi-yellow}{WARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.}
+Number of possible actions: 2
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/Users/parksoy/Desktop/Soyoung\_Udacity\_ND\_DeepLearning/6.Deep\_Reinforcement\_Learning/gym/gym/\_\_init\_\_.py:22: UserWarning: DEPRECATION WARNING: to improve load times, gym no longer automatically loads gym.spaces. Please run "import gym.spaces" to load gym.spaces on your own. This warning will turn into an error in a future version of gym.
+  warnings.warn('DEPRECATION WARNING: to improve load times, gym no longer automatically loads gym.spaces. Please run "import gym.spaces" to load gym.spaces on your own. This warning will turn into an error in a future version of gym.')
+
+    \end{Verbatim}
+
+    We interact with the simulation through \texttt{env}. You can see how
+many actions are possible from \texttt{env.action\_space.n}, and to get
+a random action you can use \texttt{env.action\_space.sample()}. Passing
+in an action as an integer to \texttt{env.step} will generate the next
+step in the simulation. This is general to all Gym games.
+
+In the Cart-Pole game, there are two possible actions, moving the cart
+left or right. So there are two actions we can take, encoded as 0 and 1.
+
+Run the code below to interact with the environment.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{actions} \PY{o}{=} \PY{p}{[}\PY{p}{]} \PY{c+c1}{\PYZsh{} actions that the agent selects}
+        \PY{n}{rewards} \PY{o}{=} \PY{p}{[}\PY{p}{]} \PY{c+c1}{\PYZsh{} obtained rewards}
+        \PY{n}{state} \PY{o}{=} \PY{n}{env}\PY{o}{.}\PY{n}{reset}\PY{p}{(}\PY{p}{)}
+        
+        \PY{k}{while} \PY{k+kc}{True}\PY{p}{:}
+            \PY{n}{action} \PY{o}{=} \PY{n}{env}\PY{o}{.}\PY{n}{action\PYZus{}space}\PY{o}{.}\PY{n}{sample}\PY{p}{(}\PY{p}{)}  \PY{c+c1}{\PYZsh{} choose a random action}
+            \PY{n}{state}\PY{p}{,} \PY{n}{reward}\PY{p}{,} \PY{n}{done}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{env}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{n}{action}\PY{p}{)} 
+            \PY{n}{rewards}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{reward}\PY{p}{)}
+            \PY{n}{actions}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{action}\PY{p}{)}
+            \PY{k}{if} \PY{n}{done}\PY{p}{:}
+                \PY{k}{break}
+\end{Verbatim}
+
+
+    We can look at the actions and rewards:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Actions:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{actions}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Rewards:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{rewards}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Actions: [0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1]
+Rewards: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+    \end{Verbatim}
+
+    The game resets after the pole has fallen past a certain angle. For each
+step while the game is running, it returns a reward of 1.0. The longer
+the game runs, the more reward we get. Then, our network's goal is to
+maximize the reward by keeping the pole vertical. It will do this by
+moving the cart to the left and the right.
+
+\subsection{\texorpdfstring{\(Q\)-Network}{Q-Network}}\label{q-network}
+
+To keep track of the action values, we'll use a neural network that
+accepts a state \(s\) as input. The output will be \(Q\)-values for each
+available action \(a\) (i.e., the output is \textbf{all} action values
+\(Q(s,a)\) \emph{corresponding to the input state \(s\)}).
+
+For this Cart-Pole game, the state has four values: the position and
+velocity of the cart, and the position and velocity of the pole. Thus,
+the neural network has \textbf{four inputs}, one for each value in the
+state, and \textbf{two outputs}, one for each possible action.
+
+As explored in the lesson, to get the training target, we'll first use
+the context provided by the state \(s\) to choose an action \(a\), then
+simulate the game using that action. This will get us the next state,
+\(s'\), and the reward \(r\). With that, we can calculate
+\(\hat{Q}(s,a) = r + \gamma \max_{a'}{Q(s', a')}\). Then we update the
+weights by minimizing \((\hat{Q}(s,a) - Q(s,a))^2\).
+
+Below is one implementation of the \(Q\)-network. It uses two fully
+connected layers with ReLU activations. Two seems to be good enough,
+three might be better. Feel free to try it out.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k+kn}{import} \PY{n+nn}{tensorflow} \PY{k}{as} \PY{n+nn}{tf}
+        
+        \PY{k}{class} \PY{n+nc}{QNetwork}\PY{p}{:}
+            \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{learning\PYZus{}rate}\PY{o}{=}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{n}{state\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} 
+                         \PY{n}{action\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{hidden\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} 
+                         \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{QNetwork}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} state inputs to the Q\PYZhy{}network}
+                \PY{k}{with} \PY{n}{tf}\PY{o}{.}\PY{n}{variable\PYZus{}scope}\PY{p}{(}\PY{n}{name}\PY{p}{)}\PY{p}{:}
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{inputs\PYZus{}} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{placeholder}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{float32}\PY{p}{,} \PY{p}{[}\PY{k+kc}{None}\PY{p}{,} \PY{n}{state\PYZus{}size}\PY{p}{]}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{inputs}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                    
+                    \PY{c+c1}{\PYZsh{} One hot encode the actions to later choose the Q\PYZhy{}value for the action}
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{actions\PYZus{}} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{placeholder}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{int32}\PY{p}{,} \PY{p}{[}\PY{k+kc}{None}\PY{p}{]}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actions}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                    \PY{n}{one\PYZus{}hot\PYZus{}actions} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{one\PYZus{}hot}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{actions\PYZus{}}\PY{p}{,} \PY{n}{action\PYZus{}size}\PY{p}{)}
+                    
+                    \PY{c+c1}{\PYZsh{} Target Q values for training}
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{targetQs\PYZus{}} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{placeholder}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{float32}\PY{p}{,} \PY{p}{[}\PY{k+kc}{None}\PY{p}{]}\PY{p}{,} \PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{target}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                    
+                    \PY{c+c1}{\PYZsh{} ReLU hidden layers}
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{fc1} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{contrib}\PY{o}{.}\PY{n}{layers}\PY{o}{.}\PY{n}{fully\PYZus{}connected}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{inputs\PYZus{}}\PY{p}{,} \PY{n}{hidden\PYZus{}size}\PY{p}{)}
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{fc2} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{contrib}\PY{o}{.}\PY{n}{layers}\PY{o}{.}\PY{n}{fully\PYZus{}connected}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{fc1}\PY{p}{,} \PY{n}{hidden\PYZus{}size}\PY{p}{)}
+        
+                    \PY{c+c1}{\PYZsh{} Linear output layer}
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{output} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{contrib}\PY{o}{.}\PY{n}{layers}\PY{o}{.}\PY{n}{fully\PYZus{}connected}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{fc2}\PY{p}{,} \PY{n}{action\PYZus{}size}\PY{p}{,} 
+                                                                    \PY{n}{activation\PYZus{}fn}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}
+                    
+                    \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} Train with loss (targetQ \PYZhy{} Q)\PYZca{}2}
+                    \PY{c+c1}{\PYZsh{} output has length 2, for two actions. This next line chooses}
+                    \PY{c+c1}{\PYZsh{} one value from output (per row) according to the one\PYZhy{}hot encoded actions.}
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{Q} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{reduce\PYZus{}sum}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{multiply}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{output}\PY{p}{,} \PY{n}{one\PYZus{}hot\PYZus{}actions}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+                    
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{loss} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{reduce\PYZus{}mean}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{square}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{targetQs\PYZus{}} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{Q}\PY{p}{)}\PY{p}{)}
+                    \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{opt} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{AdamOptimizer}\PY{p}{(}\PY{n}{learning\PYZus{}rate}\PY{p}{)}\PY{o}{.}\PY{n}{minimize}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{loss}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/Users/parksoy/anaconda3/envs/openAI/lib/python3.5/importlib/\_bootstrap.py:222: RuntimeWarning: numpy.dtype size changed, may indicate binary incompatibility. Expected 96, got 88
+  return f(*args, **kwds)
+/Users/parksoy/anaconda3/envs/openAI/lib/python3.5/importlib/\_bootstrap.py:222: RuntimeWarning: numpy.dtype size changed, may indicate binary incompatibility. Expected 96, got 88
+  return f(*args, **kwds)
+
+    \end{Verbatim}
+
+    \subsection{Experience replay}\label{experience-replay}
+
+Reinforcement learning algorithms can have stability issues due to
+correlations between states. To reduce correlations when training, we
+can store the agent's experiences and later draw a random mini-batch of
+those experiences to train on.
+
+Here, we'll create a \texttt{Memory} object that will store our
+experiences, our transitions \(<s, a, r, s'>\). This memory will have a
+maximum capacity, so we can keep newer experiences in memory while
+getting rid of older experiences. Then, we'll sample a random mini-batch
+of transitions \(<s, a, r, s'>\) and train on those.
+
+Below, I've implemented a \texttt{Memory} object. If you're unfamiliar
+with \texttt{deque}, this is a double-ended queue. You can think of it
+like a tube open on both sides. You can put objects in either side of
+the tube. But if it's full, adding anything more will push an object out
+the other side. This is a great data structure to use for the memory
+buffer.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{deque}
+        
+        \PY{k}{class} \PY{n+nc}{Memory}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{max\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{)}\PY{p}{:}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{buffer} \PY{o}{=} \PY{n}{deque}\PY{p}{(}\PY{n}{maxlen}\PY{o}{=}\PY{n}{max\PYZus{}size}\PY{p}{)}
+            
+            \PY{k}{def} \PY{n+nf}{add}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{experience}\PY{p}{)}\PY{p}{:}
+                \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{buffer}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{experience}\PY{p}{)}
+                    
+            \PY{k}{def} \PY{n+nf}{sample}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{p}{)}\PY{p}{:}
+                \PY{n}{idx} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{buffer}\PY{p}{)}\PY{p}{)}\PY{p}{,} 
+                                       \PY{n}{size}\PY{o}{=}\PY{n}{batch\PYZus{}size}\PY{p}{,} 
+                                       \PY{n}{replace}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+                \PY{k}{return} \PY{p}{[}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{buffer}\PY{p}{[}\PY{n}{ii}\PY{p}{]} \PY{k}{for} \PY{n}{ii} \PY{o+ow}{in} \PY{n}{idx}\PY{p}{]}
+\end{Verbatim}
+
+
+    \subsection{\texorpdfstring{\(Q\)-Learning training
+algorithm}{Q-Learning training algorithm}}\label{q-learning-training-algorithm}
+
+We will use the below algorithm to train the network. For this game, the
+goal is to keep the pole upright for 195 frames. So we can start a new
+episode once meeting that goal. The game ends if the pole tilts over too
+far, or if the cart moves too far the left or right. When a game ends,
+we'll start a new episode. Now, to train the agent:
+
+\begin{itemize}
+\tightlist
+\item
+  Initialize the memory \(D\)
+\item
+  Initialize the action-value network \(Q\) with random weights
+\item
+  \textbf{For} episode \(\leftarrow 1\) \textbf{to} \(M\) \textbf{do}
+\item
+  Observe \(s_0\)
+\item
+  \textbf{For} \(t \leftarrow 0\) \textbf{to} \(T-1\) \textbf{do}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    With probability \(\epsilon\) select a random action \(a_t\),
+    otherwise select \(a_t = \mathrm{argmax}_a Q(s_t,a)\)
+  \item
+    Execute action \(a_t\) in simulator and observe reward \(r_{t+1}\)
+    and new state \(s_{t+1}\)
+  \item
+    Store transition \(<s_t, a_t, r_{t+1}, s_{t+1}>\) in memory \(D\)
+  \item
+    Sample random mini-batch from \(D\): \(<s_j, a_j, r_j, s'_j>\)
+  \item
+    Set \(\hat{Q}_j = r_j\) if the episode ends at \(j+1\), otherwise
+    set \(\hat{Q}_j = r_j + \gamma \max_{a'}{Q(s'_j, a')}\)
+  \item
+    Make a gradient descent step with loss
+    \((\hat{Q}_j - Q(s_j, a_j))^2\)
+  \end{itemize}
+\item
+  \textbf{endfor}
+\item
+  \textbf{endfor}
+\end{itemize}
+
+You are welcome (and encouraged!) to take the time to extend this code
+to implement some of the improvements that we discussed in the lesson,
+to include fixed \(Q\) targets, double DQNs, prioritized replay, and/or
+dueling networks.
+
+\subsection{Hyperparameters}\label{hyperparameters}
+
+One of the more difficult aspects of reinforcement learning is the large
+number of hyperparameters. Not only are we tuning the network, but we're
+tuning the simulation.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{train\PYZus{}episodes} \PY{o}{=} \PY{l+m+mi}{1000}          \PY{c+c1}{\PYZsh{} max number of episodes to learn from}
+        \PY{n}{max\PYZus{}steps} \PY{o}{=} \PY{l+m+mi}{200}                \PY{c+c1}{\PYZsh{} max steps in an episode}
+        \PY{n}{gamma} \PY{o}{=} \PY{l+m+mf}{0.99}                   \PY{c+c1}{\PYZsh{} future reward discount}
+        
+        \PY{c+c1}{\PYZsh{} Exploration parameters}
+        \PY{n}{explore\PYZus{}start} \PY{o}{=} \PY{l+m+mf}{1.0}            \PY{c+c1}{\PYZsh{} exploration probability at start}
+        \PY{n}{explore\PYZus{}stop} \PY{o}{=} \PY{l+m+mf}{0.01}            \PY{c+c1}{\PYZsh{} minimum exploration probability }
+        \PY{n}{decay\PYZus{}rate} \PY{o}{=} \PY{l+m+mf}{0.0001}            \PY{c+c1}{\PYZsh{} exponential decay rate for exploration prob}
+        
+        \PY{c+c1}{\PYZsh{} Network parameters}
+        \PY{n}{hidden\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{64}               \PY{c+c1}{\PYZsh{} number of units in each Q\PYZhy{}network hidden layer}
+        \PY{n}{learning\PYZus{}rate} \PY{o}{=} \PY{l+m+mf}{0.0001}         \PY{c+c1}{\PYZsh{} Q\PYZhy{}network learning rate}
+        
+        \PY{c+c1}{\PYZsh{} Memory parameters}
+        \PY{n}{memory\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{10000}            \PY{c+c1}{\PYZsh{} memory capacity}
+        \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{20}                \PY{c+c1}{\PYZsh{} experience mini\PYZhy{}batch size}
+        \PY{n}{pretrain\PYZus{}length} \PY{o}{=} \PY{n}{batch\PYZus{}size}   \PY{c+c1}{\PYZsh{} number experiences to pretrain the memory}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{tf}\PY{o}{.}\PY{n}{reset\PYZus{}default\PYZus{}graph}\PY{p}{(}\PY{p}{)}
+        \PY{n}{mainQN} \PY{o}{=} \PY{n}{QNetwork}\PY{p}{(}\PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{main}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{hidden\PYZus{}size}\PY{o}{=}\PY{n}{hidden\PYZus{}size}\PY{p}{,} \PY{n}{learning\PYZus{}rate}\PY{o}{=}\PY{n}{learning\PYZus{}rate}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/Users/parksoy/anaconda3/envs/openAI/lib/python3.5/importlib/\_bootstrap.py:222: RuntimeWarning: numpy.dtype size changed, may indicate binary incompatibility. Expected 96, got 88
+  return f(*args, **kwds)
+/Users/parksoy/anaconda3/envs/openAI/lib/python3.5/importlib/\_bootstrap.py:222: RuntimeWarning: numpy.dtype size changed, may indicate binary incompatibility. Expected 96, got 88
+  return f(*args, **kwds)
+
+    \end{Verbatim}
+
+    \subsection{Populate the experience
+memory}\label{populate-the-experience-memory}
+
+Here we re-initialize the simulation and pre-populate the memory. The
+agent is taking random actions and storing the transitions in memory.
+This will help the agent with exploring the game.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} Initialize the simulation}
+        \PY{n}{env}\PY{o}{.}\PY{n}{reset}\PY{p}{(}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Take one random step to get the pole and cart moving}
+        \PY{n}{state}\PY{p}{,} \PY{n}{reward}\PY{p}{,} \PY{n}{done}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{env}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{n}{env}\PY{o}{.}\PY{n}{action\PYZus{}space}\PY{o}{.}\PY{n}{sample}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        
+        \PY{n}{memory} \PY{o}{=} \PY{n}{Memory}\PY{p}{(}\PY{n}{max\PYZus{}size}\PY{o}{=}\PY{n}{memory\PYZus{}size}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Make a bunch of random actions and store the experiences}
+        \PY{k}{for} \PY{n}{ii} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{pretrain\PYZus{}length}\PY{p}{)}\PY{p}{:}
+        
+            \PY{c+c1}{\PYZsh{} Make a random action}
+            \PY{n}{action} \PY{o}{=} \PY{n}{env}\PY{o}{.}\PY{n}{action\PYZus{}space}\PY{o}{.}\PY{n}{sample}\PY{p}{(}\PY{p}{)}
+            \PY{n}{next\PYZus{}state}\PY{p}{,} \PY{n}{reward}\PY{p}{,} \PY{n}{done}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{env}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{n}{action}\PY{p}{)}
+        
+            \PY{k}{if} \PY{n}{done}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} The simulation fails so no next state}
+                \PY{n}{next\PYZus{}state} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{state}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{} Add experience to memory}
+                \PY{n}{memory}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{p}{(}\PY{n}{state}\PY{p}{,} \PY{n}{action}\PY{p}{,} \PY{n}{reward}\PY{p}{,} \PY{n}{next\PYZus{}state}\PY{p}{)}\PY{p}{)}
+                
+                \PY{c+c1}{\PYZsh{} Start new episode}
+                \PY{n}{env}\PY{o}{.}\PY{n}{reset}\PY{p}{(}\PY{p}{)}
+                \PY{c+c1}{\PYZsh{} Take one random step to get the pole and cart moving}
+                \PY{n}{state}\PY{p}{,} \PY{n}{reward}\PY{p}{,} \PY{n}{done}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{env}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{n}{env}\PY{o}{.}\PY{n}{action\PYZus{}space}\PY{o}{.}\PY{n}{sample}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} Add experience to memory}
+                \PY{n}{memory}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{p}{(}\PY{n}{state}\PY{p}{,} \PY{n}{action}\PY{p}{,} \PY{n}{reward}\PY{p}{,} \PY{n}{next\PYZus{}state}\PY{p}{)}\PY{p}{)}
+                \PY{n}{state} \PY{o}{=} \PY{n}{next\PYZus{}state}
+\end{Verbatim}
+
+
+    \subsection{Training}\label{training}
+
+Below we'll train our agent.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{} Now train with experiences}
+         \PY{n}{saver} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{Saver}\PY{p}{(}\PY{p}{)}
+         \PY{n}{rewards\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{with} \PY{n}{tf}\PY{o}{.}\PY{n}{Session}\PY{p}{(}\PY{p}{)} \PY{k}{as} \PY{n}{sess}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} Initialize variables}
+             \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{global\PYZus{}variables\PYZus{}initializer}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+             
+             \PY{n}{step} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{k}{for} \PY{n}{ep} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{train\PYZus{}episodes}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{total\PYZus{}reward} \PY{o}{=} \PY{l+m+mi}{0}
+                 \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{0}
+                 \PY{k}{while} \PY{n}{t} \PY{o}{\PYZlt{}} \PY{n}{max\PYZus{}steps}\PY{p}{:}
+                     \PY{n}{step} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                     \PY{c+c1}{\PYZsh{} Uncomment this next line to watch the training}
+                     \PY{c+c1}{\PYZsh{} env.render() }
+                     
+                     \PY{c+c1}{\PYZsh{} Explore or Exploit}
+                     \PY{n}{explore\PYZus{}p} \PY{o}{=} \PY{n}{explore\PYZus{}stop} \PY{o}{+} \PY{p}{(}\PY{n}{explore\PYZus{}start} \PY{o}{\PYZhy{}} \PY{n}{explore\PYZus{}stop}\PY{p}{)}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{decay\PYZus{}rate}\PY{o}{*}\PY{n}{step}\PY{p}{)} 
+                     \PY{k}{if} \PY{n}{explore\PYZus{}p} \PY{o}{\PYZgt{}} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{rand}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                         \PY{c+c1}{\PYZsh{} Make a random action}
+                         \PY{n}{action} \PY{o}{=} \PY{n}{env}\PY{o}{.}\PY{n}{action\PYZus{}space}\PY{o}{.}\PY{n}{sample}\PY{p}{(}\PY{p}{)}
+                     \PY{k}{else}\PY{p}{:}
+                         \PY{c+c1}{\PYZsh{} Get action from Q\PYZhy{}network}
+                         \PY{n}{feed} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{mainQN}\PY{o}{.}\PY{n}{inputs\PYZus{}}\PY{p}{:} \PY{n}{state}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{o}{*}\PY{n}{state}\PY{o}{.}\PY{n}{shape}\PY{p}{)}\PY{p}{)}\PY{p}{\PYZcb{}}
+                         \PY{n}{Qs} \PY{o}{=} \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{mainQN}\PY{o}{.}\PY{n}{output}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{n}{feed}\PY{p}{)}
+                         \PY{n}{action} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{Qs}\PY{p}{)}
+                     
+                     \PY{c+c1}{\PYZsh{} Take action, get new state and reward}
+                     \PY{n}{next\PYZus{}state}\PY{p}{,} \PY{n}{reward}\PY{p}{,} \PY{n}{done}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{env}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{n}{action}\PY{p}{)}
+             
+                     \PY{n}{total\PYZus{}reward} \PY{o}{+}\PY{o}{=} \PY{n}{reward}
+                     
+                     \PY{k}{if} \PY{n}{done}\PY{p}{:}
+                         \PY{c+c1}{\PYZsh{} the episode ends so no next state}
+                         \PY{n}{next\PYZus{}state} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{state}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+                         \PY{n}{t} \PY{o}{=} \PY{n}{max\PYZus{}steps}
+                         
+                         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Episode: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{ep}\PY{p}{)}\PY{p}{,}
+                               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total reward: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{total\PYZus{}reward}\PY{p}{)}\PY{p}{,}
+                               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Training loss: }\PY{l+s+si}{\PYZob{}:.4f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{loss}\PY{p}{)}\PY{p}{,}
+                               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Explore P: }\PY{l+s+si}{\PYZob{}:.4f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{explore\PYZus{}p}\PY{p}{)}\PY{p}{)}
+                         \PY{n}{rewards\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{ep}\PY{p}{,} \PY{n}{total\PYZus{}reward}\PY{p}{)}\PY{p}{)}
+                         
+                         \PY{c+c1}{\PYZsh{} Add experience to memory}
+                         \PY{n}{memory}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{p}{(}\PY{n}{state}\PY{p}{,} \PY{n}{action}\PY{p}{,} \PY{n}{reward}\PY{p}{,} \PY{n}{next\PYZus{}state}\PY{p}{)}\PY{p}{)}
+                         
+                         \PY{c+c1}{\PYZsh{} Start new episode}
+                         \PY{n}{env}\PY{o}{.}\PY{n}{reset}\PY{p}{(}\PY{p}{)}
+                         \PY{c+c1}{\PYZsh{} Take one random step to get the pole and cart moving}
+                         \PY{n}{state}\PY{p}{,} \PY{n}{reward}\PY{p}{,} \PY{n}{done}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{env}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{n}{env}\PY{o}{.}\PY{n}{action\PYZus{}space}\PY{o}{.}\PY{n}{sample}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         
+                     \PY{k}{else}\PY{p}{:}
+                         \PY{c+c1}{\PYZsh{} Add experience to memory}
+                         \PY{n}{memory}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{p}{(}\PY{n}{state}\PY{p}{,} \PY{n}{action}\PY{p}{,} \PY{n}{reward}\PY{p}{,} \PY{n}{next\PYZus{}state}\PY{p}{)}\PY{p}{)}
+                         \PY{n}{state} \PY{o}{=} \PY{n}{next\PYZus{}state}
+                         \PY{n}{t} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                     
+                     \PY{c+c1}{\PYZsh{} Sample mini\PYZhy{}batch from memory}
+                     \PY{n}{batch} \PY{o}{=} \PY{n}{memory}\PY{o}{.}\PY{n}{sample}\PY{p}{(}\PY{n}{batch\PYZus{}size}\PY{p}{)}
+                     \PY{n}{states} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{each}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{k}{for} \PY{n}{each} \PY{o+ow}{in} \PY{n}{batch}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{actions} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{each}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{k}{for} \PY{n}{each} \PY{o+ow}{in} \PY{n}{batch}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{rewards} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{each}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{k}{for} \PY{n}{each} \PY{o+ow}{in} \PY{n}{batch}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{next\PYZus{}states} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{each}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]} \PY{k}{for} \PY{n}{each} \PY{o+ow}{in} \PY{n}{batch}\PY{p}{]}\PY{p}{)}
+                     
+                     \PY{c+c1}{\PYZsh{} Train network}
+                     \PY{n}{target\PYZus{}Qs} \PY{o}{=} \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{n}{mainQN}\PY{o}{.}\PY{n}{output}\PY{p}{,} \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{mainQN}\PY{o}{.}\PY{n}{inputs\PYZus{}}\PY{p}{:} \PY{n}{next\PYZus{}states}\PY{p}{\PYZcb{}}\PY{p}{)}
+                     
+                     \PY{c+c1}{\PYZsh{} Set target\PYZus{}Qs to 0 for states where episode ends}
+                     \PY{n}{episode\PYZus{}ends} \PY{o}{=} \PY{p}{(}\PY{n}{next\PYZus{}states} \PY{o}{==} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{states}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{all}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+                     \PY{n}{target\PYZus{}Qs}\PY{p}{[}\PY{n}{episode\PYZus{}ends}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}
+                     
+                     \PY{n}{targets} \PY{o}{=} \PY{n}{rewards} \PY{o}{+} \PY{n}{gamma} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{target\PYZus{}Qs}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         
+                     \PY{n}{loss}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{sess}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{[}\PY{n}{mainQN}\PY{o}{.}\PY{n}{loss}\PY{p}{,} \PY{n}{mainQN}\PY{o}{.}\PY{n}{opt}\PY{p}{]}\PY{p}{,}
+                                         \PY{n}{feed\PYZus{}dict}\PY{o}{=}\PY{p}{\PYZob{}}\PY{n}{mainQN}\PY{o}{.}\PY{n}{inputs\PYZus{}}\PY{p}{:} \PY{n}{states}\PY{p}{,}
+                                                    \PY{n}{mainQN}\PY{o}{.}\PY{n}{targetQs\PYZus{}}\PY{p}{:} \PY{n}{targets}\PY{p}{,}
+                                                    \PY{n}{mainQN}\PY{o}{.}\PY{n}{actions\PYZus{}}\PY{p}{:} \PY{n}{actions}\PY{p}{\PYZcb{}}\PY{p}{)}
+                 
+             \PY{n}{saver}\PY{o}{.}\PY{n}{save}\PY{p}{(}\PY{n}{sess}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{checkpoints/cartpole.ckpt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Episode: 1 Total reward: 7.0 Training loss: 1.1092 Explore P: 0.9993
+Episode: 2 Total reward: 11.0 Training loss: 1.1641 Explore P: 0.9982
+Episode: 3 Total reward: 15.0 Training loss: 1.1407 Explore P: 0.9967
+Episode: 4 Total reward: 50.0 Training loss: 1.1097 Explore P: 0.9918
+Episode: 5 Total reward: 10.0 Training loss: 1.0291 Explore P: 0.9908
+Episode: 6 Total reward: 19.0 Training loss: 1.0594 Explore P: 0.9890
+Episode: 7 Total reward: 50.0 Training loss: 1.2154 Explore P: 0.9841
+Episode: 8 Total reward: 17.0 Training loss: 1.1852 Explore P: 0.9824
+Episode: 9 Total reward: 20.0 Training loss: 1.2325 Explore P: 0.9805
+Episode: 10 Total reward: 20.0 Training loss: 1.1708 Explore P: 0.9786
+Episode: 11 Total reward: 18.0 Training loss: 1.2768 Explore P: 0.9768
+Episode: 12 Total reward: 21.0 Training loss: 1.1892 Explore P: 0.9748
+Episode: 13 Total reward: 19.0 Training loss: 1.2903 Explore P: 0.9730
+Episode: 14 Total reward: 16.0 Training loss: 1.2104 Explore P: 0.9714
+Episode: 15 Total reward: 28.0 Training loss: 1.4185 Explore P: 0.9687
+Episode: 16 Total reward: 47.0 Training loss: 1.3700 Explore P: 0.9642
+Episode: 17 Total reward: 36.0 Training loss: 1.8372 Explore P: 0.9608
+Episode: 18 Total reward: 22.0 Training loss: 1.5479 Explore P: 0.9587
+Episode: 19 Total reward: 13.0 Training loss: 1.8517 Explore P: 0.9575
+Episode: 20 Total reward: 26.0 Training loss: 2.0028 Explore P: 0.9550
+Episode: 21 Total reward: 12.0 Training loss: 2.5586 Explore P: 0.9539
+Episode: 22 Total reward: 20.0 Training loss: 5.3505 Explore P: 0.9520
+Episode: 23 Total reward: 19.0 Training loss: 2.3976 Explore P: 0.9502
+Episode: 24 Total reward: 17.0 Training loss: 2.2540 Explore P: 0.9486
+Episode: 25 Total reward: 19.0 Training loss: 2.2130 Explore P: 0.9468
+Episode: 26 Total reward: 12.0 Training loss: 2.0438 Explore P: 0.9457
+Episode: 27 Total reward: 14.0 Training loss: 1.9029 Explore P: 0.9444
+Episode: 28 Total reward: 20.0 Training loss: 2.0866 Explore P: 0.9425
+Episode: 29 Total reward: 31.0 Training loss: 2.7973 Explore P: 0.9396
+Episode: 30 Total reward: 12.0 Training loss: 2.9651 Explore P: 0.9385
+Episode: 31 Total reward: 23.0 Training loss: 2.1556 Explore P: 0.9364
+Episode: 32 Total reward: 15.0 Training loss: 2.1685 Explore P: 0.9350
+Episode: 33 Total reward: 13.0 Training loss: 3.3439 Explore P: 0.9338
+Episode: 34 Total reward: 15.0 Training loss: 6.2915 Explore P: 0.9324
+Episode: 35 Total reward: 21.0 Training loss: 2.8100 Explore P: 0.9305
+Episode: 36 Total reward: 22.0 Training loss: 6.0465 Explore P: 0.9285
+Episode: 37 Total reward: 14.0 Training loss: 11.8612 Explore P: 0.9272
+Episode: 38 Total reward: 23.0 Training loss: 6.6099 Explore P: 0.9251
+Episode: 39 Total reward: 12.0 Training loss: 7.7625 Explore P: 0.9240
+Episode: 40 Total reward: 19.0 Training loss: 16.7574 Explore P: 0.9222
+Episode: 41 Total reward: 12.0 Training loss: 10.0353 Explore P: 0.9211
+Episode: 42 Total reward: 14.0 Training loss: 4.4606 Explore P: 0.9199
+Episode: 43 Total reward: 32.0 Training loss: 5.0234 Explore P: 0.9170
+Episode: 44 Total reward: 15.0 Training loss: 13.2882 Explore P: 0.9156
+Episode: 45 Total reward: 24.0 Training loss: 14.3310 Explore P: 0.9134
+Episode: 46 Total reward: 15.0 Training loss: 5.6271 Explore P: 0.9121
+Episode: 47 Total reward: 17.0 Training loss: 13.8200 Explore P: 0.9105
+Episode: 48 Total reward: 24.0 Training loss: 4.9692 Explore P: 0.9084
+Episode: 49 Total reward: 40.0 Training loss: 6.5120 Explore P: 0.9048
+Episode: 50 Total reward: 10.0 Training loss: 6.4582 Explore P: 0.9039
+Episode: 51 Total reward: 53.0 Training loss: 5.5553 Explore P: 0.8992
+Episode: 52 Total reward: 24.0 Training loss: 5.9828 Explore P: 0.8971
+Episode: 53 Total reward: 19.0 Training loss: 34.7870 Explore P: 0.8954
+Episode: 54 Total reward: 23.0 Training loss: 108.3206 Explore P: 0.8933
+Episode: 55 Total reward: 14.0 Training loss: 33.6690 Explore P: 0.8921
+Episode: 56 Total reward: 39.0 Training loss: 27.3123 Explore P: 0.8887
+Episode: 57 Total reward: 18.0 Training loss: 43.7710 Explore P: 0.8871
+Episode: 58 Total reward: 20.0 Training loss: 12.8709 Explore P: 0.8853
+Episode: 59 Total reward: 16.0 Training loss: 113.1833 Explore P: 0.8839
+Episode: 60 Total reward: 16.0 Training loss: 54.2161 Explore P: 0.8825
+Episode: 61 Total reward: 13.0 Training loss: 81.3433 Explore P: 0.8814
+Episode: 62 Total reward: 27.0 Training loss: 10.3222 Explore P: 0.8791
+Episode: 63 Total reward: 45.0 Training loss: 47.6484 Explore P: 0.8752
+Episode: 64 Total reward: 32.0 Training loss: 108.7200 Explore P: 0.8724
+Episode: 65 Total reward: 19.0 Training loss: 25.9326 Explore P: 0.8708
+Episode: 66 Total reward: 15.0 Training loss: 56.8974 Explore P: 0.8695
+Episode: 67 Total reward: 25.0 Training loss: 10.5297 Explore P: 0.8673
+Episode: 68 Total reward: 25.0 Training loss: 114.7445 Explore P: 0.8652
+Episode: 69 Total reward: 9.0 Training loss: 10.0079 Explore P: 0.8644
+Episode: 70 Total reward: 8.0 Training loss: 24.4753 Explore P: 0.8637
+Episode: 71 Total reward: 13.0 Training loss: 52.6948 Explore P: 0.8626
+Episode: 72 Total reward: 26.0 Training loss: 92.5265 Explore P: 0.8604
+Episode: 73 Total reward: 12.0 Training loss: 8.1954 Explore P: 0.8594
+Episode: 74 Total reward: 10.0 Training loss: 117.9629 Explore P: 0.8585
+Episode: 75 Total reward: 15.0 Training loss: 52.1243 Explore P: 0.8573
+Episode: 76 Total reward: 13.0 Training loss: 58.6366 Explore P: 0.8562
+Episode: 77 Total reward: 25.0 Training loss: 63.0346 Explore P: 0.8540
+Episode: 78 Total reward: 35.0 Training loss: 212.5484 Explore P: 0.8511
+Episode: 79 Total reward: 22.0 Training loss: 161.2593 Explore P: 0.8492
+Episode: 80 Total reward: 21.0 Training loss: 60.0588 Explore P: 0.8475
+Episode: 81 Total reward: 20.0 Training loss: 41.8923 Explore P: 0.8458
+Episode: 82 Total reward: 16.0 Training loss: 8.1236 Explore P: 0.8445
+Episode: 83 Total reward: 14.0 Training loss: 88.3950 Explore P: 0.8433
+Episode: 84 Total reward: 53.0 Training loss: 44.5328 Explore P: 0.8389
+Episode: 85 Total reward: 20.0 Training loss: 135.0265 Explore P: 0.8372
+Episode: 86 Total reward: 24.0 Training loss: 62.1389 Explore P: 0.8353
+Episode: 87 Total reward: 17.0 Training loss: 8.0309 Explore P: 0.8339
+Episode: 88 Total reward: 20.0 Training loss: 7.0870 Explore P: 0.8322
+Episode: 89 Total reward: 32.0 Training loss: 6.4043 Explore P: 0.8296
+Episode: 90 Total reward: 17.0 Training loss: 8.5506 Explore P: 0.8282
+Episode: 91 Total reward: 15.0 Training loss: 139.6842 Explore P: 0.8270
+Episode: 92 Total reward: 15.0 Training loss: 5.9677 Explore P: 0.8257
+Episode: 93 Total reward: 25.0 Training loss: 6.2425 Explore P: 0.8237
+Episode: 94 Total reward: 9.0 Training loss: 74.9401 Explore P: 0.8230
+Episode: 95 Total reward: 25.0 Training loss: 141.0291 Explore P: 0.8209
+Episode: 96 Total reward: 43.0 Training loss: 66.9468 Explore P: 0.8175
+Episode: 97 Total reward: 39.0 Training loss: 5.3019 Explore P: 0.8143
+Episode: 98 Total reward: 10.0 Training loss: 4.9353 Explore P: 0.8135
+Episode: 99 Total reward: 37.0 Training loss: 78.1844 Explore P: 0.8106
+Episode: 100 Total reward: 12.0 Training loss: 147.1725 Explore P: 0.8096
+Episode: 101 Total reward: 13.0 Training loss: 4.0962 Explore P: 0.8086
+Episode: 102 Total reward: 22.0 Training loss: 226.3422 Explore P: 0.8068
+Episode: 103 Total reward: 20.0 Training loss: 3.9720 Explore P: 0.8052
+Episode: 104 Total reward: 12.0 Training loss: 3.7871 Explore P: 0.8043
+Episode: 105 Total reward: 22.0 Training loss: 3.7426 Explore P: 0.8025
+Episode: 106 Total reward: 15.0 Training loss: 108.0056 Explore P: 0.8013
+Episode: 107 Total reward: 21.0 Training loss: 181.0961 Explore P: 0.7997
+Episode: 108 Total reward: 18.0 Training loss: 65.6267 Explore P: 0.7982
+Episode: 109 Total reward: 15.0 Training loss: 3.0149 Explore P: 0.7971
+Episode: 110 Total reward: 35.0 Training loss: 70.4513 Explore P: 0.7943
+Episode: 111 Total reward: 13.0 Training loss: 152.7883 Explore P: 0.7933
+Episode: 112 Total reward: 20.0 Training loss: 2.9727 Explore P: 0.7917
+Episode: 113 Total reward: 58.0 Training loss: 4.2585 Explore P: 0.7872
+Episode: 114 Total reward: 19.0 Training loss: 50.3093 Explore P: 0.7857
+Episode: 115 Total reward: 13.0 Training loss: 71.1286 Explore P: 0.7847
+Episode: 116 Total reward: 30.0 Training loss: 3.6764 Explore P: 0.7824
+Episode: 117 Total reward: 34.0 Training loss: 112.3697 Explore P: 0.7798
+Episode: 118 Total reward: 20.0 Training loss: 2.6586 Explore P: 0.7782
+Episode: 119 Total reward: 8.0 Training loss: 88.1147 Explore P: 0.7776
+Episode: 120 Total reward: 10.0 Training loss: 2.1947 Explore P: 0.7769
+Episode: 121 Total reward: 18.0 Training loss: 2.5402 Explore P: 0.7755
+Episode: 122 Total reward: 8.0 Training loss: 67.7850 Explore P: 0.7749
+Episode: 123 Total reward: 9.0 Training loss: 2.3048 Explore P: 0.7742
+Episode: 124 Total reward: 22.0 Training loss: 2.2959 Explore P: 0.7725
+Episode: 125 Total reward: 16.0 Training loss: 1.8436 Explore P: 0.7713
+Episode: 126 Total reward: 17.0 Training loss: 58.4024 Explore P: 0.7700
+Episode: 127 Total reward: 40.0 Training loss: 2.1555 Explore P: 0.7670
+Episode: 128 Total reward: 13.0 Training loss: 54.7019 Explore P: 0.7660
+Episode: 129 Total reward: 14.0 Training loss: 88.5387 Explore P: 0.7649
+Episode: 130 Total reward: 18.0 Training loss: 1.8284 Explore P: 0.7636
+Episode: 131 Total reward: 16.0 Training loss: 105.5930 Explore P: 0.7624
+Episode: 132 Total reward: 13.0 Training loss: 1.7023 Explore P: 0.7614
+Episode: 133 Total reward: 13.0 Training loss: 62.7026 Explore P: 0.7604
+Episode: 134 Total reward: 14.0 Training loss: 60.9061 Explore P: 0.7593
+Episode: 135 Total reward: 23.0 Training loss: 51.3778 Explore P: 0.7576
+Episode: 136 Total reward: 22.0 Training loss: 1.4184 Explore P: 0.7560
+Episode: 137 Total reward: 15.0 Training loss: 1.6357 Explore P: 0.7549
+Episode: 138 Total reward: 17.0 Training loss: 200.5327 Explore P: 0.7536
+Episode: 139 Total reward: 11.0 Training loss: 103.7501 Explore P: 0.7528
+Episode: 140 Total reward: 19.0 Training loss: 1.1474 Explore P: 0.7514
+Episode: 141 Total reward: 19.0 Training loss: 1.1550 Explore P: 0.7500
+Episode: 142 Total reward: 25.0 Training loss: 1.1832 Explore P: 0.7481
+Episode: 143 Total reward: 12.0 Training loss: 51.4112 Explore P: 0.7472
+Episode: 144 Total reward: 20.0 Training loss: 1.1157 Explore P: 0.7458
+Episode: 145 Total reward: 26.0 Training loss: 86.1675 Explore P: 0.7439
+Episode: 146 Total reward: 12.0 Training loss: 87.8504 Explore P: 0.7430
+Episode: 147 Total reward: 30.0 Training loss: 1.1627 Explore P: 0.7408
+Episode: 148 Total reward: 17.0 Training loss: 82.3332 Explore P: 0.7395
+Episode: 149 Total reward: 19.0 Training loss: 0.7950 Explore P: 0.7381
+Episode: 150 Total reward: 22.0 Training loss: 39.3122 Explore P: 0.7365
+Episode: 151 Total reward: 11.0 Training loss: 38.3843 Explore P: 0.7357
+Episode: 152 Total reward: 17.0 Training loss: 110.5147 Explore P: 0.7345
+Episode: 153 Total reward: 11.0 Training loss: 71.0913 Explore P: 0.7337
+Episode: 154 Total reward: 31.0 Training loss: 34.7190 Explore P: 0.7315
+Episode: 155 Total reward: 19.0 Training loss: 214.7430 Explore P: 0.7301
+Episode: 156 Total reward: 12.0 Training loss: 36.2967 Explore P: 0.7292
+Episode: 157 Total reward: 14.0 Training loss: 0.8842 Explore P: 0.7282
+Episode: 158 Total reward: 14.0 Training loss: 68.5654 Explore P: 0.7272
+Episode: 159 Total reward: 14.0 Training loss: 30.9438 Explore P: 0.7262
+Episode: 160 Total reward: 9.0 Training loss: 86.0322 Explore P: 0.7256
+Episode: 161 Total reward: 15.0 Training loss: 1.0654 Explore P: 0.7245
+Episode: 162 Total reward: 8.0 Training loss: 135.0448 Explore P: 0.7239
+Episode: 163 Total reward: 8.0 Training loss: 29.1745 Explore P: 0.7234
+Episode: 164 Total reward: 44.0 Training loss: 28.7824 Explore P: 0.7202
+Episode: 165 Total reward: 20.0 Training loss: 28.3428 Explore P: 0.7188
+Episode: 166 Total reward: 13.0 Training loss: 39.0923 Explore P: 0.7179
+Episode: 167 Total reward: 13.0 Training loss: 29.2104 Explore P: 0.7170
+Episode: 168 Total reward: 9.0 Training loss: 0.8650 Explore P: 0.7163
+Episode: 169 Total reward: 12.0 Training loss: 0.7359 Explore P: 0.7155
+Episode: 170 Total reward: 15.0 Training loss: 1.1275 Explore P: 0.7144
+Episode: 171 Total reward: 12.0 Training loss: 30.6160 Explore P: 0.7136
+Episode: 172 Total reward: 10.0 Training loss: 36.8890 Explore P: 0.7129
+Episode: 173 Total reward: 17.0 Training loss: 26.0811 Explore P: 0.7117
+Episode: 174 Total reward: 15.0 Training loss: 27.5146 Explore P: 0.7106
+Episode: 175 Total reward: 11.0 Training loss: 0.5804 Explore P: 0.7099
+Episode: 176 Total reward: 16.0 Training loss: 94.8633 Explore P: 0.7088
+Episode: 177 Total reward: 14.0 Training loss: 83.4476 Explore P: 0.7078
+Episode: 178 Total reward: 12.0 Training loss: 1.0659 Explore P: 0.7069
+Episode: 179 Total reward: 13.0 Training loss: 0.8055 Explore P: 0.7060
+Episode: 180 Total reward: 18.0 Training loss: 0.8254 Explore P: 0.7048
+Episode: 181 Total reward: 12.0 Training loss: 0.9337 Explore P: 0.7040
+Episode: 182 Total reward: 23.0 Training loss: 1.0208 Explore P: 0.7024
+Episode: 183 Total reward: 8.0 Training loss: 85.2970 Explore P: 0.7018
+Episode: 184 Total reward: 10.0 Training loss: 53.1164 Explore P: 0.7011
+Episode: 185 Total reward: 22.0 Training loss: 28.9597 Explore P: 0.6996
+Episode: 186 Total reward: 11.0 Training loss: 1.1693 Explore P: 0.6988
+Episode: 187 Total reward: 15.0 Training loss: 27.8597 Explore P: 0.6978
+Episode: 188 Total reward: 26.0 Training loss: 33.4786 Explore P: 0.6960
+Episode: 189 Total reward: 18.0 Training loss: 1.3215 Explore P: 0.6948
+Episode: 190 Total reward: 10.0 Training loss: 21.3186 Explore P: 0.6941
+Episode: 191 Total reward: 10.0 Training loss: 0.9437 Explore P: 0.6934
+Episode: 192 Total reward: 21.0 Training loss: 1.1441 Explore P: 0.6920
+Episode: 193 Total reward: 18.0 Training loss: 42.0750 Explore P: 0.6908
+Episode: 194 Total reward: 11.0 Training loss: 28.9320 Explore P: 0.6900
+Episode: 195 Total reward: 8.0 Training loss: 22.5806 Explore P: 0.6895
+Episode: 196 Total reward: 21.0 Training loss: 24.1351 Explore P: 0.6880
+Episode: 197 Total reward: 18.0 Training loss: 22.4333 Explore P: 0.6868
+Episode: 198 Total reward: 13.0 Training loss: 38.4729 Explore P: 0.6859
+Episode: 199 Total reward: 24.0 Training loss: 43.7200 Explore P: 0.6843
+Episode: 200 Total reward: 25.0 Training loss: 23.3758 Explore P: 0.6826
+Episode: 201 Total reward: 20.0 Training loss: 22.9281 Explore P: 0.6813
+Episode: 202 Total reward: 25.0 Training loss: 21.7664 Explore P: 0.6796
+Episode: 203 Total reward: 86.0 Training loss: 17.9479 Explore P: 0.6739
+Episode: 204 Total reward: 27.0 Training loss: 38.3115 Explore P: 0.6721
+Episode: 205 Total reward: 31.0 Training loss: 19.9942 Explore P: 0.6700
+Episode: 206 Total reward: 61.0 Training loss: 24.7360 Explore P: 0.6660
+Episode: 207 Total reward: 9.0 Training loss: 23.8379 Explore P: 0.6654
+Episode: 208 Total reward: 10.0 Training loss: 18.8427 Explore P: 0.6648
+Episode: 209 Total reward: 72.0 Training loss: 34.3522 Explore P: 0.6601
+Episode: 210 Total reward: 41.0 Training loss: 37.8226 Explore P: 0.6574
+Episode: 211 Total reward: 24.0 Training loss: 37.8501 Explore P: 0.6559
+Episode: 212 Total reward: 99.0 Training loss: 30.9216 Explore P: 0.6495
+Episode: 213 Total reward: 67.0 Training loss: 30.7084 Explore P: 0.6452
+Episode: 214 Total reward: 41.0 Training loss: 16.5257 Explore P: 0.6426
+Episode: 215 Total reward: 53.0 Training loss: 42.9023 Explore P: 0.6393
+Episode: 216 Total reward: 54.0 Training loss: 15.6032 Explore P: 0.6359
+Episode: 217 Total reward: 97.0 Training loss: 13.1293 Explore P: 0.6299
+Episode: 218 Total reward: 53.0 Training loss: 15.4412 Explore P: 0.6266
+Episode: 219 Total reward: 41.0 Training loss: 16.1332 Explore P: 0.6241
+Episode: 220 Total reward: 8.0 Training loss: 36.9915 Explore P: 0.6236
+Episode: 221 Total reward: 44.0 Training loss: 1.4314 Explore P: 0.6209
+Episode: 222 Total reward: 94.0 Training loss: 22.9756 Explore P: 0.6152
+Episode: 223 Total reward: 81.0 Training loss: 25.5920 Explore P: 0.6103
+Episode: 224 Total reward: 64.0 Training loss: 1.4254 Explore P: 0.6065
+Episode: 225 Total reward: 12.0 Training loss: 1.3853 Explore P: 0.6057
+Episode: 226 Total reward: 77.0 Training loss: 1.2058 Explore P: 0.6012
+Episode: 227 Total reward: 47.0 Training loss: 34.8605 Explore P: 0.5984
+Episode: 228 Total reward: 22.0 Training loss: 13.0612 Explore P: 0.5971
+Episode: 229 Total reward: 37.0 Training loss: 18.3148 Explore P: 0.5949
+Episode: 230 Total reward: 22.0 Training loss: 17.2417 Explore P: 0.5937
+Episode: 231 Total reward: 63.0 Training loss: 17.8864 Explore P: 0.5900
+Episode: 232 Total reward: 38.0 Training loss: 1.3710 Explore P: 0.5878
+Episode: 233 Total reward: 28.0 Training loss: 1.6795 Explore P: 0.5862
+Episode: 234 Total reward: 52.0 Training loss: 28.1404 Explore P: 0.5832
+Episode: 235 Total reward: 102.0 Training loss: 1.1067 Explore P: 0.5774
+Episode: 236 Total reward: 31.0 Training loss: 33.1753 Explore P: 0.5756
+Episode: 237 Total reward: 34.0 Training loss: 1.4487 Explore P: 0.5737
+Episode: 238 Total reward: 54.0 Training loss: 0.5579 Explore P: 0.5707
+Episode: 239 Total reward: 33.0 Training loss: 1.2483 Explore P: 0.5688
+Episode: 240 Total reward: 34.0 Training loss: 19.1471 Explore P: 0.5669
+Episode: 241 Total reward: 68.0 Training loss: 1.2092 Explore P: 0.5631
+Episode: 242 Total reward: 33.0 Training loss: 17.8639 Explore P: 0.5613
+Episode: 243 Total reward: 87.0 Training loss: 24.6934 Explore P: 0.5565
+Episode: 244 Total reward: 43.0 Training loss: 1.0881 Explore P: 0.5542
+Episode: 245 Total reward: 25.0 Training loss: 2.0249 Explore P: 0.5528
+Episode: 246 Total reward: 46.0 Training loss: 1.2890 Explore P: 0.5503
+Episode: 247 Total reward: 31.0 Training loss: 35.5924 Explore P: 0.5487
+Episode: 248 Total reward: 81.0 Training loss: 20.3178 Explore P: 0.5443
+Episode: 249 Total reward: 17.0 Training loss: 19.7477 Explore P: 0.5434
+Episode: 250 Total reward: 15.0 Training loss: 1.5614 Explore P: 0.5426
+Episode: 251 Total reward: 29.0 Training loss: 1.7678 Explore P: 0.5411
+Episode: 252 Total reward: 17.0 Training loss: 1.3868 Explore P: 0.5402
+Episode: 253 Total reward: 21.0 Training loss: 2.4232 Explore P: 0.5391
+Episode: 254 Total reward: 91.0 Training loss: 1.0477 Explore P: 0.5343
+Episode: 255 Total reward: 42.0 Training loss: 58.5958 Explore P: 0.5321
+Episode: 256 Total reward: 39.0 Training loss: 1.6053 Explore P: 0.5300
+Episode: 257 Total reward: 40.0 Training loss: 3.2563 Explore P: 0.5280
+Episode: 258 Total reward: 49.0 Training loss: 23.7094 Explore P: 0.5254
+Episode: 259 Total reward: 59.0 Training loss: 40.0316 Explore P: 0.5224
+Episode: 260 Total reward: 39.0 Training loss: 1.6071 Explore P: 0.5204
+Episode: 261 Total reward: 35.0 Training loss: 1.4973 Explore P: 0.5186
+Episode: 262 Total reward: 26.0 Training loss: 27.8452 Explore P: 0.5173
+Episode: 263 Total reward: 73.0 Training loss: 19.2285 Explore P: 0.5136
+Episode: 264 Total reward: 45.0 Training loss: 33.8709 Explore P: 0.5114
+Episode: 265 Total reward: 36.0 Training loss: 1.5913 Explore P: 0.5095
+Episode: 266 Total reward: 90.0 Training loss: 51.3430 Explore P: 0.5051
+Episode: 267 Total reward: 39.0 Training loss: 32.5727 Explore P: 0.5031
+Episode: 268 Total reward: 35.0 Training loss: 46.8532 Explore P: 0.5014
+Episode: 269 Total reward: 40.0 Training loss: 62.8012 Explore P: 0.4995
+Episode: 270 Total reward: 45.0 Training loss: 29.2299 Explore P: 0.4973
+Episode: 271 Total reward: 59.0 Training loss: 70.5729 Explore P: 0.4944
+Episode: 272 Total reward: 21.0 Training loss: 2.2312 Explore P: 0.4934
+Episode: 273 Total reward: 42.0 Training loss: 1.3233 Explore P: 0.4914
+Episode: 274 Total reward: 62.0 Training loss: 35.7821 Explore P: 0.4884
+Episode: 275 Total reward: 20.0 Training loss: 2.5516 Explore P: 0.4874
+Episode: 276 Total reward: 52.0 Training loss: 31.5482 Explore P: 0.4849
+Episode: 277 Total reward: 87.0 Training loss: 1.6370 Explore P: 0.4808
+Episode: 278 Total reward: 92.0 Training loss: 27.5808 Explore P: 0.4765
+Episode: 279 Total reward: 52.0 Training loss: 2.1644 Explore P: 0.4741
+Episode: 280 Total reward: 23.0 Training loss: 2.1641 Explore P: 0.4730
+Episode: 281 Total reward: 65.0 Training loss: 2.1955 Explore P: 0.4700
+Episode: 282 Total reward: 38.0 Training loss: 36.8116 Explore P: 0.4683
+Episode: 283 Total reward: 126.0 Training loss: 74.2957 Explore P: 0.4626
+Episode: 284 Total reward: 63.0 Training loss: 1.9791 Explore P: 0.4597
+Episode: 285 Total reward: 37.0 Training loss: 31.8482 Explore P: 0.4581
+Episode: 286 Total reward: 38.0 Training loss: 48.8373 Explore P: 0.4564
+Episode: 287 Total reward: 50.0 Training loss: 74.9534 Explore P: 0.4541
+Episode: 288 Total reward: 60.0 Training loss: 32.6968 Explore P: 0.4515
+Episode: 289 Total reward: 67.0 Training loss: 2.8481 Explore P: 0.4485
+Episode: 290 Total reward: 57.0 Training loss: 1.3190 Explore P: 0.4460
+Episode: 291 Total reward: 90.0 Training loss: 1.3420 Explore P: 0.4421
+Episode: 292 Total reward: 29.0 Training loss: 1.8564 Explore P: 0.4409
+Episode: 293 Total reward: 57.0 Training loss: 2.5829 Explore P: 0.4384
+Episode: 294 Total reward: 28.0 Training loss: 2.3271 Explore P: 0.4372
+Episode: 295 Total reward: 83.0 Training loss: 72.0529 Explore P: 0.4337
+Episode: 296 Total reward: 19.0 Training loss: 54.5834 Explore P: 0.4329
+Episode: 297 Total reward: 60.0 Training loss: 18.9247 Explore P: 0.4304
+Episode: 298 Total reward: 88.0 Training loss: 2.0422 Explore P: 0.4267
+Episode: 299 Total reward: 77.0 Training loss: 51.5067 Explore P: 0.4235
+Episode: 300 Total reward: 76.0 Training loss: 43.5849 Explore P: 0.4203
+Episode: 301 Total reward: 51.0 Training loss: 1.3351 Explore P: 0.4183
+Episode: 302 Total reward: 26.0 Training loss: 2.3064 Explore P: 0.4172
+Episode: 303 Total reward: 136.0 Training loss: 3.2554 Explore P: 0.4117
+Episode: 304 Total reward: 31.0 Training loss: 79.3553 Explore P: 0.4105
+Episode: 305 Total reward: 29.0 Training loss: 1.6306 Explore P: 0.4093
+Episode: 306 Total reward: 48.0 Training loss: 37.5234 Explore P: 0.4074
+Episode: 307 Total reward: 37.0 Training loss: 2.2372 Explore P: 0.4059
+Episode: 308 Total reward: 94.0 Training loss: 1.2880 Explore P: 0.4022
+Episode: 309 Total reward: 78.0 Training loss: 32.4186 Explore P: 0.3992
+Episode: 310 Total reward: 34.0 Training loss: 41.4640 Explore P: 0.3978
+Episode: 311 Total reward: 35.0 Training loss: 58.1190 Explore P: 0.3965
+Episode: 313 Total reward: 4.0 Training loss: 1.5874 Explore P: 0.3887
+Episode: 314 Total reward: 46.0 Training loss: 156.9855 Explore P: 0.3869
+Episode: 315 Total reward: 28.0 Training loss: 70.2159 Explore P: 0.3859
+Episode: 316 Total reward: 69.0 Training loss: 2.6914 Explore P: 0.3833
+Episode: 317 Total reward: 20.0 Training loss: 56.8496 Explore P: 0.3826
+Episode: 318 Total reward: 60.0 Training loss: 64.7868 Explore P: 0.3803
+Episode: 319 Total reward: 51.0 Training loss: 115.4765 Explore P: 0.3784
+Episode: 320 Total reward: 97.0 Training loss: 148.6624 Explore P: 0.3749
+Episode: 321 Total reward: 97.0 Training loss: 1.4286 Explore P: 0.3714
+Episode: 322 Total reward: 97.0 Training loss: 2.4422 Explore P: 0.3679
+Episode: 323 Total reward: 73.0 Training loss: 50.5002 Explore P: 0.3653
+Episode: 324 Total reward: 41.0 Training loss: 147.7448 Explore P: 0.3638
+Episode: 325 Total reward: 85.0 Training loss: 65.2284 Explore P: 0.3608
+Episode: 326 Total reward: 72.0 Training loss: 89.9450 Explore P: 0.3583
+Episode: 327 Total reward: 41.0 Training loss: 2.3701 Explore P: 0.3569
+Episode: 328 Total reward: 52.0 Training loss: 2.2909 Explore P: 0.3551
+Episode: 329 Total reward: 96.0 Training loss: 22.6251 Explore P: 0.3518
+Episode: 330 Total reward: 60.0 Training loss: 3.0435 Explore P: 0.3497
+Episode: 331 Total reward: 42.0 Training loss: 42.4121 Explore P: 0.3483
+Episode: 332 Total reward: 64.0 Training loss: 2.1477 Explore P: 0.3462
+Episode: 333 Total reward: 61.0 Training loss: 2.0388 Explore P: 0.3441
+Episode: 334 Total reward: 27.0 Training loss: 0.8124 Explore P: 0.3432
+Episode: 335 Total reward: 105.0 Training loss: 72.6380 Explore P: 0.3397
+Episode: 336 Total reward: 41.0 Training loss: 47.3979 Explore P: 0.3384
+Episode: 337 Total reward: 101.0 Training loss: 72.4832 Explore P: 0.3351
+Episode: 338 Total reward: 102.0 Training loss: 1.4600 Explore P: 0.3318
+Episode: 339 Total reward: 111.0 Training loss: 2.0940 Explore P: 0.3282
+Episode: 340 Total reward: 125.0 Training loss: 136.8938 Explore P: 0.3243
+Episode: 341 Total reward: 60.0 Training loss: 2.0105 Explore P: 0.3224
+Episode: 342 Total reward: 121.0 Training loss: 1.9486 Explore P: 0.3186
+Episode: 343 Total reward: 56.0 Training loss: 12.3016 Explore P: 0.3169
+Episode: 344 Total reward: 67.0 Training loss: 55.8491 Explore P: 0.3149
+Episode: 345 Total reward: 58.0 Training loss: 17.8249 Explore P: 0.3131
+Episode: 346 Total reward: 154.0 Training loss: 130.3820 Explore P: 0.3085
+Episode: 347 Total reward: 127.0 Training loss: 1.9064 Explore P: 0.3047
+Episode: 348 Total reward: 71.0 Training loss: 2.0096 Explore P: 0.3026
+Episode: 349 Total reward: 94.0 Training loss: 2.2607 Explore P: 0.2999
+Episode: 350 Total reward: 113.0 Training loss: 63.9981 Explore P: 0.2966
+Episode: 351 Total reward: 57.0 Training loss: 2.2282 Explore P: 0.2950
+Episode: 352 Total reward: 171.0 Training loss: 3.1583 Explore P: 0.2902
+Episode: 353 Total reward: 82.0 Training loss: 61.3781 Explore P: 0.2879
+Episode: 355 Total reward: 11.0 Training loss: 2.3020 Explore P: 0.2821
+Episode: 356 Total reward: 105.0 Training loss: 1.0688 Explore P: 0.2792
+Episode: 357 Total reward: 81.0 Training loss: 124.0490 Explore P: 0.2771
+Episode: 358 Total reward: 72.0 Training loss: 28.0910 Explore P: 0.2752
+Episode: 360 Total reward: 51.0 Training loss: 61.0379 Explore P: 0.2686
+Episode: 361 Total reward: 110.0 Training loss: 1.5090 Explore P: 0.2658
+Episode: 363 Total reward: 31.0 Training loss: 1.6725 Explore P: 0.2599
+Episode: 364 Total reward: 108.0 Training loss: 1.7075 Explore P: 0.2572
+Episode: 365 Total reward: 68.0 Training loss: 1.7091 Explore P: 0.2556
+Episode: 366 Total reward: 137.0 Training loss: 1.8610 Explore P: 0.2522
+Episode: 368 Total reward: 20.0 Training loss: 2.5716 Explore P: 0.2469
+Episode: 369 Total reward: 75.0 Training loss: 60.8208 Explore P: 0.2452
+Episode: 370 Total reward: 134.0 Training loss: 1.8327 Explore P: 0.2420
+Episode: 371 Total reward: 151.0 Training loss: 59.1407 Explore P: 0.2386
+Episode: 372 Total reward: 74.0 Training loss: 94.2832 Explore P: 0.2369
+Episode: 373 Total reward: 66.0 Training loss: 1.0435 Explore P: 0.2354
+Episode: 374 Total reward: 119.0 Training loss: 135.5489 Explore P: 0.2327
+Episode: 376 Total reward: 42.0 Training loss: 50.8879 Explore P: 0.2274
+Episode: 377 Total reward: 156.0 Training loss: 1.1858 Explore P: 0.2240
+Episode: 378 Total reward: 147.0 Training loss: 1.6875 Explore P: 0.2209
+Episode: 380 Total reward: 86.0 Training loss: 293.5930 Explore P: 0.2150
+Episode: 381 Total reward: 104.0 Training loss: 0.9483 Explore P: 0.2128
+Episode: 382 Total reward: 152.0 Training loss: 1.1981 Explore P: 0.2098
+Episode: 383 Total reward: 106.0 Training loss: 1.5604 Explore P: 0.2077
+Episode: 384 Total reward: 107.0 Training loss: 0.9190 Explore P: 0.2056
+Episode: 385 Total reward: 134.0 Training loss: 1.6866 Explore P: 0.2030
+Episode: 386 Total reward: 151.0 Training loss: 1.3643 Explore P: 0.2001
+Episode: 387 Total reward: 145.0 Training loss: 1.3855 Explore P: 0.1973
+Episode: 389 Total reward: 2.0 Training loss: 0.7120 Explore P: 0.1936
+Episode: 391 Total reward: 6.0 Training loss: 1.4561 Explore P: 0.1898
+Episode: 392 Total reward: 183.0 Training loss: 1.3715 Explore P: 0.1866
+Episode: 393 Total reward: 95.0 Training loss: 0.6536 Explore P: 0.1849
+Episode: 395 Total reward: 27.0 Training loss: 272.1331 Explore P: 0.1810
+Episode: 397 Total reward: 46.0 Training loss: 87.4122 Explore P: 0.1768
+Episode: 399 Total reward: 35.0 Training loss: 107.8302 Explore P: 0.1730
+Episode: 400 Total reward: 143.0 Training loss: 1.0293 Explore P: 0.1706
+Episode: 402 Total reward: 66.0 Training loss: 1.1372 Explore P: 0.1664
+Episode: 404 Total reward: 7.0 Training loss: 1.1782 Explore P: 0.1632
+Episode: 406 Total reward: 136.0 Training loss: 0.8697 Explore P: 0.1582
+Episode: 407 Total reward: 92.0 Training loss: 0.4194 Explore P: 0.1568
+Episode: 409 Total reward: 82.0 Training loss: 64.5227 Explore P: 0.1527
+Episode: 411 Total reward: 57.0 Training loss: 0.4112 Explore P: 0.1491
+Episode: 412 Total reward: 107.0 Training loss: 1.3451 Explore P: 0.1476
+Episode: 414 Total reward: 157.0 Training loss: 0.7674 Explore P: 0.1428
+Episode: 416 Total reward: 43.0 Training loss: 0.3930 Explore P: 0.1396
+Episode: 418 Total reward: 50.0 Training loss: 56.2687 Explore P: 0.1364
+Episode: 419 Total reward: 182.0 Training loss: 0.5154 Explore P: 0.1341
+Episode: 421 Total reward: 71.0 Training loss: 0.4812 Explore P: 0.1308
+Episode: 423 Total reward: 22.0 Training loss: 0.1713 Explore P: 0.1282
+Episode: 425 Total reward: 17.0 Training loss: 0.2920 Explore P: 0.1256
+Episode: 427 Total reward: 134.0 Training loss: 0.8187 Explore P: 0.1218
+Episode: 429 Total reward: 54.0 Training loss: 0.3804 Explore P: 0.1190
+Episode: 431 Total reward: 38.0 Training loss: 0.5501 Explore P: 0.1165
+Episode: 433 Total reward: 193.0 Training loss: 0.5016 Explore P: 0.1124
+Episode: 434 Total reward: 200.0 Training loss: 86.7495 Explore P: 0.1103
+Episode: 435 Total reward: 170.0 Training loss: 0.5527 Explore P: 0.1086
+Episode: 437 Total reward: 74.0 Training loss: 0.4382 Explore P: 0.1060
+Episode: 439 Total reward: 48.0 Training loss: 0.9788 Explore P: 0.1036
+Episode: 442 Total reward: 92.0 Training loss: 0.4673 Explore P: 0.0991
+Episode: 444 Total reward: 93.0 Training loss: 0.2165 Explore P: 0.0965
+Episode: 445 Total reward: 134.0 Training loss: 0.5088 Explore P: 0.0954
+Episode: 447 Total reward: 178.0 Training loss: 0.2517 Explore P: 0.0922
+Episode: 449 Total reward: 108.0 Training loss: 0.3336 Explore P: 0.0897
+Episode: 451 Total reward: 79.0 Training loss: 18.0841 Explore P: 0.0875
+Episode: 454 Total reward: 36.0 Training loss: 0.3420 Explore P: 0.0842
+Episode: 457 Total reward: 44.0 Training loss: 0.2293 Explore P: 0.0810
+Episode: 459 Total reward: 173.0 Training loss: 0.2381 Explore P: 0.0784
+Episode: 461 Total reward: 78.0 Training loss: 0.5096 Explore P: 0.0765
+Episode: 463 Total reward: 104.0 Training loss: 0.1731 Explore P: 0.0745
+Episode: 465 Total reward: 154.0 Training loss: 0.1683 Explore P: 0.0723
+Episode: 468 Total reward: 13.0 Training loss: 0.2962 Explore P: 0.0698
+Episode: 471 Total reward: 99.0 Training loss: 0.1541 Explore P: 0.0669
+Episode: 474 Total reward: 99.0 Training loss: 0.1403 Explore P: 0.0641
+Episode: 475 Total reward: 101.0 Training loss: 0.1603 Explore P: 0.0636
+Episode: 476 Total reward: 109.0 Training loss: 0.1687 Explore P: 0.0630
+Episode: 477 Total reward: 140.0 Training loss: 0.1688 Explore P: 0.0622
+Episode: 480 Total reward: 99.0 Training loss: 0.0719 Explore P: 0.0597
+Episode: 481 Total reward: 83.0 Training loss: 165.4172 Explore P: 0.0593
+Episode: 482 Total reward: 89.0 Training loss: 170.0010 Explore P: 0.0588
+Episode: 485 Total reward: 99.0 Training loss: 0.2697 Explore P: 0.0565
+Episode: 486 Total reward: 116.0 Training loss: 0.3288 Explore P: 0.0559
+Episode: 487 Total reward: 129.0 Training loss: 132.2053 Explore P: 0.0553
+Episode: 488 Total reward: 76.0 Training loss: 125.2256 Explore P: 0.0550
+Episode: 491 Total reward: 46.0 Training loss: 0.2889 Explore P: 0.0530
+Episode: 492 Total reward: 109.0 Training loss: 0.1634 Explore P: 0.0526
+Episode: 493 Total reward: 80.0 Training loss: 0.2867 Explore P: 0.0522
+Episode: 496 Total reward: 99.0 Training loss: 0.1622 Explore P: 0.0502
+Episode: 499 Total reward: 99.0 Training loss: 0.2457 Explore P: 0.0482
+Episode: 500 Total reward: 127.0 Training loss: 0.1384 Explore P: 0.0477
+Episode: 502 Total reward: 19.0 Training loss: 0.1663 Explore P: 0.0469
+Episode: 503 Total reward: 176.0 Training loss: 0.6102 Explore P: 0.0463
+Episode: 505 Total reward: 131.0 Training loss: 0.1833 Explore P: 0.0451
+Episode: 507 Total reward: 131.0 Training loss: 0.2471 Explore P: 0.0440
+Episode: 508 Total reward: 161.0 Training loss: 0.1825 Explore P: 0.0434
+Episode: 509 Total reward: 153.0 Training loss: 0.2255 Explore P: 0.0429
+Episode: 511 Total reward: 51.0 Training loss: 0.6494 Explore P: 0.0421
+Episode: 514 Total reward: 39.0 Training loss: 0.2179 Explore P: 0.0407
+Episode: 516 Total reward: 31.0 Training loss: 0.2162 Explore P: 0.0400
+Episode: 518 Total reward: 160.0 Training loss: 0.1252 Explore P: 0.0389
+Episode: 521 Total reward: 99.0 Training loss: 0.1739 Explore P: 0.0375
+Episode: 523 Total reward: 102.0 Training loss: 0.2202 Explore P: 0.0367
+Episode: 525 Total reward: 76.0 Training loss: 0.4695 Explore P: 0.0360
+Episode: 527 Total reward: 77.0 Training loss: 0.2727 Explore P: 0.0353
+Episode: 529 Total reward: 75.0 Training loss: 0.5814 Explore P: 0.0346
+Episode: 530 Total reward: 198.0 Training loss: 0.3775 Explore P: 0.0341
+Episode: 532 Total reward: 29.0 Training loss: 0.3889 Explore P: 0.0336
+Episode: 534 Total reward: 9.0 Training loss: 0.5158 Explore P: 0.0331
+Episode: 536 Total reward: 44.0 Training loss: 0.7383 Explore P: 0.0325
+Episode: 538 Total reward: 26.0 Training loss: 148.4472 Explore P: 0.0320
+Episode: 540 Total reward: 110.0 Training loss: 0.5192 Explore P: 0.0313
+Episode: 542 Total reward: 47.0 Training loss: 0.6800 Explore P: 0.0308
+Episode: 543 Total reward: 189.0 Training loss: 228.4059 Explore P: 0.0304
+Episode: 544 Total reward: 198.0 Training loss: 235.6192 Explore P: 0.0300
+Episode: 545 Total reward: 171.0 Training loss: 0.4741 Explore P: 0.0297
+Episode: 546 Total reward: 188.0 Training loss: 0.3148 Explore P: 0.0293
+Episode: 547 Total reward: 184.0 Training loss: 0.5103 Explore P: 0.0290
+Episode: 548 Total reward: 198.0 Training loss: 0.9186 Explore P: 0.0286
+Episode: 549 Total reward: 188.0 Training loss: 0.4456 Explore P: 0.0283
+Episode: 550 Total reward: 188.0 Training loss: 368.8092 Explore P: 0.0279
+Episode: 551 Total reward: 175.0 Training loss: 0.8233 Explore P: 0.0276
+Episode: 552 Total reward: 173.0 Training loss: 0.3732 Explore P: 0.0273
+Episode: 553 Total reward: 194.0 Training loss: 0.3293 Explore P: 0.0270
+Episode: 555 Total reward: 8.0 Training loss: 0.7401 Explore P: 0.0266
+Episode: 557 Total reward: 8.0 Training loss: 395.9489 Explore P: 0.0263
+Episode: 559 Total reward: 17.0 Training loss: 4.7678 Explore P: 0.0259
+Episode: 561 Total reward: 126.0 Training loss: 0.7835 Explore P: 0.0254
+Episode: 564 Total reward: 38.0 Training loss: 0.6267 Explore P: 0.0248
+Episode: 567 Total reward: 91.0 Training loss: 0.6501 Explore P: 0.0241
+Episode: 570 Total reward: 99.0 Training loss: 0.1810 Explore P: 0.0234
+Episode: 573 Total reward: 99.0 Training loss: 0.6329 Explore P: 0.0227
+Episode: 576 Total reward: 99.0 Training loss: 0.1407 Explore P: 0.0221
+Episode: 579 Total reward: 99.0 Training loss: 0.1516 Explore P: 0.0215
+Episode: 582 Total reward: 99.0 Training loss: 0.1279 Explore P: 0.0210
+Episode: 585 Total reward: 99.0 Training loss: 0.2600 Explore P: 0.0204
+Episode: 588 Total reward: 99.0 Training loss: 0.6783 Explore P: 0.0199
+Episode: 590 Total reward: 125.0 Training loss: 0.8231 Explore P: 0.0196
+Episode: 592 Total reward: 37.0 Training loss: 0.2756 Explore P: 0.0194
+Episode: 594 Total reward: 62.0 Training loss: 0.6665 Explore P: 0.0191
+Episode: 596 Total reward: 32.0 Training loss: 0.5628 Explore P: 0.0189
+Episode: 598 Total reward: 36.0 Training loss: 0.5118 Explore P: 0.0187
+Episode: 600 Total reward: 29.0 Training loss: 0.6621 Explore P: 0.0185
+Episode: 602 Total reward: 19.0 Training loss: 0.4697 Explore P: 0.0183
+Episode: 603 Total reward: 200.0 Training loss: 1.4170 Explore P: 0.0182
+Episode: 604 Total reward: 22.0 Training loss: 0.7292 Explore P: 0.0181
+Episode: 605 Total reward: 184.0 Training loss: 0.6811 Explore P: 0.0180
+Episode: 606 Total reward: 26.0 Training loss: 0.5459 Explore P: 0.0180
+Episode: 607 Total reward: 175.0 Training loss: 1.0284 Explore P: 0.0178
+Episode: 608 Total reward: 24.0 Training loss: 0.9215 Explore P: 0.0178
+Episode: 609 Total reward: 28.0 Training loss: 0.8460 Explore P: 0.0178
+Episode: 610 Total reward: 18.0 Training loss: 1.0064 Explore P: 0.0178
+Episode: 611 Total reward: 186.0 Training loss: 1.3149 Explore P: 0.0176
+Episode: 612 Total reward: 25.0 Training loss: 1.5341 Explore P: 0.0176
+Episode: 613 Total reward: 23.0 Training loss: 1.3269 Explore P: 0.0176
+Episode: 614 Total reward: 20.0 Training loss: 1.0547 Explore P: 0.0176
+Episode: 615 Total reward: 18.0 Training loss: 1.3358 Explore P: 0.0176
+Episode: 616 Total reward: 17.0 Training loss: 1.1939 Explore P: 0.0176
+Episode: 617 Total reward: 16.0 Training loss: 0.9619 Explore P: 0.0175
+Episode: 618 Total reward: 20.0 Training loss: 1.0391 Explore P: 0.0175
+Episode: 619 Total reward: 22.0 Training loss: 1.0151 Explore P: 0.0175
+Episode: 620 Total reward: 23.0 Training loss: 0.9229 Explore P: 0.0175
+Episode: 621 Total reward: 20.0 Training loss: 1.2173 Explore P: 0.0175
+Episode: 622 Total reward: 19.0 Training loss: 433.8080 Explore P: 0.0175
+Episode: 623 Total reward: 19.0 Training loss: 0.8487 Explore P: 0.0175
+Episode: 624 Total reward: 20.0 Training loss: 0.9946 Explore P: 0.0174
+Episode: 625 Total reward: 20.0 Training loss: 0.6042 Explore P: 0.0174
+Episode: 626 Total reward: 21.0 Training loss: 0.7092 Explore P: 0.0174
+Episode: 627 Total reward: 20.0 Training loss: 0.8949 Explore P: 0.0174
+Episode: 628 Total reward: 12.0 Training loss: 1.0961 Explore P: 0.0174
+Episode: 629 Total reward: 19.0 Training loss: 1.2009 Explore P: 0.0174
+Episode: 630 Total reward: 27.0 Training loss: 0.8064 Explore P: 0.0174
+Episode: 631 Total reward: 29.0 Training loss: 0.7131 Explore P: 0.0173
+Episode: 632 Total reward: 20.0 Training loss: 1.2717 Explore P: 0.0173
+Episode: 633 Total reward: 21.0 Training loss: 0.9129 Explore P: 0.0173
+Episode: 634 Total reward: 18.0 Training loss: 2.1113 Explore P: 0.0173
+Episode: 635 Total reward: 18.0 Training loss: 0.6654 Explore P: 0.0173
+Episode: 636 Total reward: 18.0 Training loss: 0.7023 Explore P: 0.0173
+Episode: 637 Total reward: 24.0 Training loss: 0.6269 Explore P: 0.0172
+Episode: 638 Total reward: 187.0 Training loss: 0.6502 Explore P: 0.0171
+Episode: 639 Total reward: 30.0 Training loss: 1.9664 Explore P: 0.0171
+Episode: 641 Total reward: 126.0 Training loss: 0.7088 Explore P: 0.0169
+Episode: 644 Total reward: 99.0 Training loss: 0.5632 Explore P: 0.0165
+Episode: 647 Total reward: 99.0 Training loss: 458.7413 Explore P: 0.0162
+Episode: 650 Total reward: 99.0 Training loss: 0.7972 Explore P: 0.0159
+Episode: 652 Total reward: 137.0 Training loss: 1.6325 Explore P: 0.0157
+Episode: 654 Total reward: 36.0 Training loss: 2.1890 Explore P: 0.0156
+Episode: 656 Total reward: 26.0 Training loss: 2.1629 Explore P: 0.0155
+Episode: 657 Total reward: 183.0 Training loss: 2.3735 Explore P: 0.0154
+Episode: 658 Total reward: 134.0 Training loss: 4.9863 Explore P: 0.0153
+Episode: 659 Total reward: 128.0 Training loss: 4.2118 Explore P: 0.0152
+Episode: 660 Total reward: 103.0 Training loss: 4.4971 Explore P: 0.0152
+Episode: 661 Total reward: 15.0 Training loss: 175.3793 Explore P: 0.0152
+Episode: 662 Total reward: 13.0 Training loss: 6.8612 Explore P: 0.0151
+Episode: 663 Total reward: 16.0 Training loss: 6.4962 Explore P: 0.0151
+Episode: 664 Total reward: 20.0 Training loss: 5.2208 Explore P: 0.0151
+Episode: 665 Total reward: 14.0 Training loss: 5.2283 Explore P: 0.0151
+Episode: 666 Total reward: 14.0 Training loss: 9.0162 Explore P: 0.0151
+Episode: 667 Total reward: 13.0 Training loss: 6.4355 Explore P: 0.0151
+Episode: 668 Total reward: 12.0 Training loss: 6.1626 Explore P: 0.0151
+Episode: 669 Total reward: 15.0 Training loss: 8.0036 Explore P: 0.0151
+Episode: 670 Total reward: 16.0 Training loss: 7.8802 Explore P: 0.0151
+Episode: 671 Total reward: 13.0 Training loss: 6.5877 Explore P: 0.0151
+Episode: 672 Total reward: 10.0 Training loss: 8.6532 Explore P: 0.0151
+Episode: 673 Total reward: 13.0 Training loss: 8.3426 Explore P: 0.0151
+Episode: 674 Total reward: 9.0 Training loss: 10.0084 Explore P: 0.0151
+Episode: 675 Total reward: 10.0 Training loss: 8.4577 Explore P: 0.0151
+Episode: 676 Total reward: 11.0 Training loss: 9.5922 Explore P: 0.0151
+Episode: 677 Total reward: 13.0 Training loss: 1156.3630 Explore P: 0.0150
+Episode: 678 Total reward: 12.0 Training loss: 11.6704 Explore P: 0.0150
+Episode: 679 Total reward: 8.0 Training loss: 11.4304 Explore P: 0.0150
+Episode: 680 Total reward: 9.0 Training loss: 11.0713 Explore P: 0.0150
+Episode: 681 Total reward: 8.0 Training loss: 1078.1228 Explore P: 0.0150
+Episode: 682 Total reward: 12.0 Training loss: 10.6610 Explore P: 0.0150
+Episode: 683 Total reward: 10.0 Training loss: 9.7512 Explore P: 0.0150
+Episode: 684 Total reward: 12.0 Training loss: 10.0014 Explore P: 0.0150
+Episode: 685 Total reward: 9.0 Training loss: 9.6428 Explore P: 0.0150
+Episode: 686 Total reward: 9.0 Training loss: 12.3666 Explore P: 0.0150
+Episode: 687 Total reward: 10.0 Training loss: 10.3033 Explore P: 0.0150
+Episode: 688 Total reward: 10.0 Training loss: 13.7247 Explore P: 0.0150
+Episode: 689 Total reward: 10.0 Training loss: 1433.1862 Explore P: 0.0150
+Episode: 690 Total reward: 9.0 Training loss: 12.1380 Explore P: 0.0150
+Episode: 691 Total reward: 10.0 Training loss: 1100.1948 Explore P: 0.0150
+Episode: 692 Total reward: 10.0 Training loss: 9.7176 Explore P: 0.0150
+Episode: 693 Total reward: 9.0 Training loss: 10.1468 Explore P: 0.0150
+Episode: 694 Total reward: 9.0 Training loss: 8.7062 Explore P: 0.0150
+Episode: 695 Total reward: 13.0 Training loss: 10.5805 Explore P: 0.0150
+Episode: 696 Total reward: 12.0 Training loss: 6.2499 Explore P: 0.0150
+Episode: 697 Total reward: 12.0 Training loss: 9.4076 Explore P: 0.0149
+Episode: 698 Total reward: 10.0 Training loss: 10.4528 Explore P: 0.0149
+Episode: 699 Total reward: 12.0 Training loss: 8.1091 Explore P: 0.0149
+Episode: 700 Total reward: 13.0 Training loss: 1142.1177 Explore P: 0.0149
+Episode: 701 Total reward: 9.0 Training loss: 14.8220 Explore P: 0.0149
+Episode: 702 Total reward: 8.0 Training loss: 11.2562 Explore P: 0.0149
+Episode: 703 Total reward: 12.0 Training loss: 1309.7698 Explore P: 0.0149
+Episode: 704 Total reward: 10.0 Training loss: 1383.9253 Explore P: 0.0149
+Episode: 705 Total reward: 13.0 Training loss: 13.0662 Explore P: 0.0149
+Episode: 706 Total reward: 11.0 Training loss: 11.2282 Explore P: 0.0149
+Episode: 707 Total reward: 13.0 Training loss: 1298.9042 Explore P: 0.0149
+Episode: 708 Total reward: 9.0 Training loss: 16.9200 Explore P: 0.0149
+Episode: 709 Total reward: 13.0 Training loss: 11.1267 Explore P: 0.0149
+Episode: 710 Total reward: 12.0 Training loss: 12.4917 Explore P: 0.0149
+Episode: 711 Total reward: 11.0 Training loss: 10.8446 Explore P: 0.0149
+Episode: 712 Total reward: 12.0 Training loss: 8.7695 Explore P: 0.0149
+Episode: 713 Total reward: 15.0 Training loss: 8.0460 Explore P: 0.0149
+Episode: 714 Total reward: 17.0 Training loss: 9.0760 Explore P: 0.0148
+Episode: 715 Total reward: 18.0 Training loss: 9.0567 Explore P: 0.0148
+Episode: 718 Total reward: 99.0 Training loss: 6.6565 Explore P: 0.0146
+Episode: 721 Total reward: 62.0 Training loss: 5.4717 Explore P: 0.0144
+Episode: 723 Total reward: 43.0 Training loss: 431.1806 Explore P: 0.0143
+Episode: 724 Total reward: 146.0 Training loss: 7.8952 Explore P: 0.0142
+Episode: 725 Total reward: 22.0 Training loss: 376.7946 Explore P: 0.0142
+Episode: 726 Total reward: 18.0 Training loss: 7.6552 Explore P: 0.0142
+Episode: 727 Total reward: 20.0 Training loss: 19.0989 Explore P: 0.0142
+Episode: 728 Total reward: 19.0 Training loss: 6.9377 Explore P: 0.0142
+Episode: 729 Total reward: 18.0 Training loss: 12.4153 Explore P: 0.0142
+Episode: 730 Total reward: 15.0 Training loss: 11.4957 Explore P: 0.0142
+Episode: 731 Total reward: 17.0 Training loss: 8.9763 Explore P: 0.0142
+Episode: 732 Total reward: 19.0 Training loss: 17.1661 Explore P: 0.0142
+Episode: 733 Total reward: 19.0 Training loss: 12.8179 Explore P: 0.0142
+Episode: 734 Total reward: 22.0 Training loss: 16.7872 Explore P: 0.0141
+Episode: 735 Total reward: 25.0 Training loss: 9.6626 Explore P: 0.0141
+Episode: 736 Total reward: 21.0 Training loss: 11.6191 Explore P: 0.0141
+Episode: 737 Total reward: 22.0 Training loss: 17.1958 Explore P: 0.0141
+Episode: 738 Total reward: 17.0 Training loss: 11.3698 Explore P: 0.0141
+Episode: 739 Total reward: 17.0 Training loss: 11.9018 Explore P: 0.0141
+Episode: 740 Total reward: 14.0 Training loss: 19.6592 Explore P: 0.0141
+Episode: 741 Total reward: 20.0 Training loss: 10.6019 Explore P: 0.0141
+Episode: 742 Total reward: 15.0 Training loss: 11.1683 Explore P: 0.0141
+Episode: 743 Total reward: 18.0 Training loss: 4.1353 Explore P: 0.0141
+Episode: 744 Total reward: 15.0 Training loss: 3.1389 Explore P: 0.0141
+Episode: 745 Total reward: 14.0 Training loss: 631.8727 Explore P: 0.0141
+Episode: 746 Total reward: 14.0 Training loss: 7.8969 Explore P: 0.0141
+Episode: 747 Total reward: 16.0 Training loss: 6.2032 Explore P: 0.0141
+Episode: 748 Total reward: 16.0 Training loss: 755.4541 Explore P: 0.0140
+Episode: 749 Total reward: 15.0 Training loss: 15.9206 Explore P: 0.0140
+Episode: 750 Total reward: 19.0 Training loss: 793.2474 Explore P: 0.0140
+Episode: 751 Total reward: 14.0 Training loss: 6.4533 Explore P: 0.0140
+Episode: 752 Total reward: 14.0 Training loss: 586.4083 Explore P: 0.0140
+Episode: 753 Total reward: 13.0 Training loss: 10.9869 Explore P: 0.0140
+Episode: 754 Total reward: 18.0 Training loss: 133.6873 Explore P: 0.0140
+Episode: 755 Total reward: 12.0 Training loss: 15.0173 Explore P: 0.0140
+Episode: 756 Total reward: 18.0 Training loss: 7.3778 Explore P: 0.0140
+Episode: 757 Total reward: 15.0 Training loss: 9.3421 Explore P: 0.0140
+Episode: 758 Total reward: 20.0 Training loss: 6.1933 Explore P: 0.0140
+Episode: 759 Total reward: 17.0 Training loss: 15.0344 Explore P: 0.0140
+Episode: 760 Total reward: 17.0 Training loss: 11.1751 Explore P: 0.0140
+Episode: 761 Total reward: 20.0 Training loss: 9.7332 Explore P: 0.0140
+Episode: 762 Total reward: 17.0 Training loss: 528.3843 Explore P: 0.0140
+Episode: 763 Total reward: 17.0 Training loss: 19.7003 Explore P: 0.0140
+Episode: 764 Total reward: 18.0 Training loss: 16.6962 Explore P: 0.0139
+Episode: 765 Total reward: 17.0 Training loss: 17.6940 Explore P: 0.0139
+Episode: 766 Total reward: 18.0 Training loss: 737.3088 Explore P: 0.0139
+Episode: 767 Total reward: 21.0 Training loss: 7.8779 Explore P: 0.0139
+Episode: 768 Total reward: 16.0 Training loss: 736.1547 Explore P: 0.0139
+Episode: 769 Total reward: 16.0 Training loss: 5.0987 Explore P: 0.0139
+Episode: 770 Total reward: 14.0 Training loss: 5.7799 Explore P: 0.0139
+Episode: 771 Total reward: 19.0 Training loss: 5.8858 Explore P: 0.0139
+Episode: 772 Total reward: 14.0 Training loss: 16.0337 Explore P: 0.0139
+Episode: 773 Total reward: 16.0 Training loss: 1125.0570 Explore P: 0.0139
+Episode: 774 Total reward: 20.0 Training loss: 13.9608 Explore P: 0.0139
+Episode: 775 Total reward: 11.0 Training loss: 20.0922 Explore P: 0.0139
+Episode: 776 Total reward: 19.0 Training loss: 18.4099 Explore P: 0.0139
+Episode: 777 Total reward: 12.0 Training loss: 8.4726 Explore P: 0.0139
+Episode: 778 Total reward: 18.0 Training loss: 17.6739 Explore P: 0.0139
+Episode: 779 Total reward: 15.0 Training loss: 1317.2722 Explore P: 0.0138
+Episode: 780 Total reward: 15.0 Training loss: 18.2418 Explore P: 0.0138
+Episode: 781 Total reward: 13.0 Training loss: 8.8346 Explore P: 0.0138
+Episode: 782 Total reward: 18.0 Training loss: 2.8253 Explore P: 0.0138
+Episode: 783 Total reward: 15.0 Training loss: 19.0901 Explore P: 0.0138
+Episode: 784 Total reward: 19.0 Training loss: 655.4855 Explore P: 0.0138
+Episode: 785 Total reward: 18.0 Training loss: 7.8629 Explore P: 0.0138
+Episode: 786 Total reward: 23.0 Training loss: 61.1572 Explore P: 0.0138
+Episode: 787 Total reward: 23.0 Training loss: 12.6831 Explore P: 0.0138
+Episode: 788 Total reward: 16.0 Training loss: 13.7805 Explore P: 0.0138
+Episode: 789 Total reward: 25.0 Training loss: 16.1126 Explore P: 0.0138
+Episode: 790 Total reward: 23.0 Training loss: 5.0172 Explore P: 0.0138
+Episode: 791 Total reward: 158.0 Training loss: 9.9675 Explore P: 0.0137
+Episode: 793 Total reward: 17.0 Training loss: 340.1447 Explore P: 0.0136
+Episode: 795 Total reward: 80.0 Training loss: 2.9567 Explore P: 0.0135
+Episode: 797 Total reward: 143.0 Training loss: 5.6326 Explore P: 0.0134
+Episode: 800 Total reward: 99.0 Training loss: 218.6874 Explore P: 0.0132
+Episode: 803 Total reward: 99.0 Training loss: 3.8476 Explore P: 0.0131
+Episode: 805 Total reward: 127.0 Training loss: 58.2449 Explore P: 0.0130
+Episode: 807 Total reward: 73.0 Training loss: 8.4226 Explore P: 0.0129
+Episode: 809 Total reward: 48.0 Training loss: 9.9473 Explore P: 0.0128
+Episode: 811 Total reward: 58.0 Training loss: 197.0283 Explore P: 0.0128
+Episode: 813 Total reward: 93.0 Training loss: 5.3161 Explore P: 0.0127
+Episode: 815 Total reward: 44.0 Training loss: 3.5583 Explore P: 0.0126
+Episode: 817 Total reward: 12.0 Training loss: 7.3471 Explore P: 0.0126
+Episode: 819 Total reward: 37.0 Training loss: 248.7097 Explore P: 0.0125
+Episode: 821 Total reward: 68.0 Training loss: 9.7046 Explore P: 0.0124
+Episode: 823 Total reward: 35.0 Training loss: 2.8299 Explore P: 0.0124
+Episode: 825 Total reward: 61.0 Training loss: 440.1688 Explore P: 0.0123
+Episode: 827 Total reward: 86.0 Training loss: 184.2432 Explore P: 0.0123
+Episode: 829 Total reward: 93.0 Training loss: 4.9372 Explore P: 0.0122
+Episode: 831 Total reward: 22.0 Training loss: 6.7099 Explore P: 0.0121
+Episode: 833 Total reward: 90.0 Training loss: 1.7394 Explore P: 0.0121
+Episode: 835 Total reward: 80.0 Training loss: 1.8525 Explore P: 0.0120
+Episode: 837 Total reward: 41.0 Training loss: 11.7343 Explore P: 0.0120
+Episode: 839 Total reward: 41.0 Training loss: 1.2424 Explore P: 0.0119
+Episode: 841 Total reward: 47.0 Training loss: 1.0741 Explore P: 0.0119
+Episode: 843 Total reward: 56.0 Training loss: 7.1890 Explore P: 0.0118
+Episode: 845 Total reward: 89.0 Training loss: 4.3489 Explore P: 0.0118
+Episode: 847 Total reward: 66.0 Training loss: 2.4644 Explore P: 0.0117
+Episode: 849 Total reward: 91.0 Training loss: 3.8193 Explore P: 0.0117
+Episode: 851 Total reward: 54.0 Training loss: 2.1110 Explore P: 0.0116
+Episode: 853 Total reward: 81.0 Training loss: 1.6638 Explore P: 0.0116
+Episode: 855 Total reward: 57.0 Training loss: 2.0313 Explore P: 0.0116
+Episode: 857 Total reward: 69.0 Training loss: 1.8827 Explore P: 0.0115
+Episode: 859 Total reward: 35.0 Training loss: 0.8820 Explore P: 0.0115
+Episode: 861 Total reward: 82.0 Training loss: 0.8563 Explore P: 0.0114
+Episode: 863 Total reward: 58.0 Training loss: 0.8644 Explore P: 0.0114
+Episode: 865 Total reward: 75.0 Training loss: 1.7085 Explore P: 0.0114
+Episode: 867 Total reward: 47.0 Training loss: 1.1535 Explore P: 0.0113
+Episode: 869 Total reward: 62.0 Training loss: 0.6745 Explore P: 0.0113
+Episode: 871 Total reward: 37.0 Training loss: 0.6860 Explore P: 0.0113
+Episode: 873 Total reward: 69.0 Training loss: 1.2222 Explore P: 0.0112
+Episode: 875 Total reward: 47.0 Training loss: 0.3850 Explore P: 0.0112
+Episode: 877 Total reward: 87.0 Training loss: 0.7299 Explore P: 0.0112
+Episode: 879 Total reward: 69.0 Training loss: 0.7326 Explore P: 0.0111
+Episode: 881 Total reward: 80.0 Training loss: 0.2628 Explore P: 0.0111
+Episode: 883 Total reward: 102.0 Training loss: 0.2444 Explore P: 0.0111
+Episode: 885 Total reward: 63.0 Training loss: 0.1820 Explore P: 0.0110
+Episode: 887 Total reward: 62.0 Training loss: 0.3625 Explore P: 0.0110
+Episode: 889 Total reward: 98.0 Training loss: 0.1929 Explore P: 0.0110
+Episode: 891 Total reward: 70.0 Training loss: 0.1133 Explore P: 0.0110
+Episode: 893 Total reward: 62.0 Training loss: 0.0779 Explore P: 0.0109
+Episode: 895 Total reward: 62.0 Training loss: 0.0522 Explore P: 0.0109
+Episode: 897 Total reward: 56.0 Training loss: 0.4520 Explore P: 0.0109
+Episode: 899 Total reward: 60.0 Training loss: 0.0706 Explore P: 0.0109
+Episode: 901 Total reward: 80.0 Training loss: 55.5846 Explore P: 0.0108
+Episode: 903 Total reward: 78.0 Training loss: 0.3305 Explore P: 0.0108
+Episode: 905 Total reward: 54.0 Training loss: 0.0354 Explore P: 0.0108
+Episode: 907 Total reward: 71.0 Training loss: 0.1163 Explore P: 0.0108
+Episode: 909 Total reward: 77.0 Training loss: 0.1358 Explore P: 0.0108
+Episode: 911 Total reward: 43.0 Training loss: 0.0716 Explore P: 0.0107
+Episode: 913 Total reward: 92.0 Training loss: 0.1749 Explore P: 0.0107
+Episode: 915 Total reward: 69.0 Training loss: 0.0638 Explore P: 0.0107
+Episode: 917 Total reward: 58.0 Training loss: 0.0704 Explore P: 0.0107
+Episode: 919 Total reward: 81.0 Training loss: 0.0982 Explore P: 0.0107
+Episode: 921 Total reward: 82.0 Training loss: 0.0786 Explore P: 0.0106
+Episode: 923 Total reward: 102.0 Training loss: 0.0394 Explore P: 0.0106
+Episode: 925 Total reward: 55.0 Training loss: 0.0790 Explore P: 0.0106
+Episode: 927 Total reward: 80.0 Training loss: 0.3553 Explore P: 0.0106
+Episode: 929 Total reward: 64.0 Training loss: 0.2216 Explore P: 0.0106
+Episode: 931 Total reward: 57.0 Training loss: 0.0582 Explore P: 0.0106
+Episode: 933 Total reward: 85.0 Training loss: 0.0863 Explore P: 0.0105
+Episode: 935 Total reward: 85.0 Training loss: 0.0678 Explore P: 0.0105
+Episode: 937 Total reward: 82.0 Training loss: 0.0959 Explore P: 0.0105
+Episode: 939 Total reward: 78.0 Training loss: 0.0574 Explore P: 0.0105
+Episode: 941 Total reward: 66.0 Training loss: 0.0529 Explore P: 0.0105
+Episode: 943 Total reward: 77.0 Training loss: 0.1042 Explore P: 0.0105
+Episode: 945 Total reward: 90.0 Training loss: 0.1034 Explore P: 0.0105
+Episode: 947 Total reward: 103.0 Training loss: 0.1754 Explore P: 0.0104
+Episode: 949 Total reward: 89.0 Training loss: 0.0664 Explore P: 0.0104
+Episode: 951 Total reward: 79.0 Training loss: 0.0917 Explore P: 0.0104
+Episode: 953 Total reward: 92.0 Training loss: 0.0391 Explore P: 0.0104
+Episode: 955 Total reward: 94.0 Training loss: 0.0533 Explore P: 0.0104
+Episode: 957 Total reward: 107.0 Training loss: 13.5139 Explore P: 0.0104
+Episode: 959 Total reward: 122.0 Training loss: 0.1549 Explore P: 0.0104
+Episode: 961 Total reward: 109.0 Training loss: 0.1310 Explore P: 0.0104
+Episode: 963 Total reward: 100.0 Training loss: 0.1213 Explore P: 0.0104
+Episode: 965 Total reward: 97.0 Training loss: 0.1348 Explore P: 0.0103
+Episode: 967 Total reward: 107.0 Training loss: 0.0631 Explore P: 0.0103
+Episode: 969 Total reward: 103.0 Training loss: 0.0939 Explore P: 0.0103
+Episode: 971 Total reward: 117.0 Training loss: 0.0659 Explore P: 0.0103
+Episode: 973 Total reward: 140.0 Training loss: 0.0630 Explore P: 0.0103
+Episode: 975 Total reward: 96.0 Training loss: 0.1296 Explore P: 0.0103
+Episode: 977 Total reward: 104.0 Training loss: 0.1526 Explore P: 0.0103
+Episode: 979 Total reward: 107.0 Training loss: 0.1401 Explore P: 0.0103
+Episode: 981 Total reward: 163.0 Training loss: 0.0647 Explore P: 0.0103
+Episode: 983 Total reward: 146.0 Training loss: 0.1606 Explore P: 0.0103
+Episode: 985 Total reward: 127.0 Training loss: 10.0527 Explore P: 0.0102
+Episode: 987 Total reward: 107.0 Training loss: 0.1718 Explore P: 0.0102
+Episode: 989 Total reward: 140.0 Training loss: 0.0510 Explore P: 0.0102
+Episode: 991 Total reward: 124.0 Training loss: 0.0847 Explore P: 0.0102
+Episode: 993 Total reward: 88.0 Training loss: 0.0503 Explore P: 0.0102
+Episode: 995 Total reward: 165.0 Training loss: 0.0733 Explore P: 0.0102
+Episode: 997 Total reward: 140.0 Training loss: 0.0363 Explore P: 0.0102
+Episode: 999 Total reward: 137.0 Training loss: 0.1103 Explore P: 0.0102
+
+    \end{Verbatim}
+
+    \subsection{Visualizing training}\label{visualizing-training}
+
+Below we plot the total rewards for each episode. The rolling average is
+plotted in blue.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         
+         \PY{k}{def} \PY{n+nf}{running\PYZus{}mean}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{N}\PY{p}{)}\PY{p}{:}
+             \PY{n}{cumsum} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{insert}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)} 
+             \PY{k}{return} \PY{p}{(}\PY{n}{cumsum}\PY{p}{[}\PY{n}{N}\PY{p}{:}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{cumsum}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{n}{N}\PY{p}{]}\PY{p}{)} \PY{o}{/} \PY{n}{N} 
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{eps}\PY{p}{,} \PY{n}{rews} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{rewards\PYZus{}list}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+         \PY{n}{smoothed\PYZus{}rews} \PY{o}{=} \PY{n}{running\PYZus{}mean}\PY{p}{(}\PY{n}{rews}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{eps}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{n+nb}{len}\PY{p}{(}\PY{n}{smoothed\PYZus{}rews}\PY{p}{)}\PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{smoothed\PYZus{}rews}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{running\PYZus{}mean}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{eps}\PY{p}{,} \PY{n}{rews}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{grey}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.3}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rewards\PYZus{}list}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Episode}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total Reward}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:} <matplotlib.legend.Legend at 0x125c97588>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_21_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{figure}
+\centering
+\includegraphics{output_21_1.png}
+\caption{png}
+\end{figure}
+
+\subsection{Playing Atari Games}\label{playing-atari-games}
+
+So, Cart-Pole is a pretty simple game. However, the same model can be
+used to train an agent to play something much more complicated like Pong
+or Space Invaders. Instead of a state like we're using here though,
+you'd want to use convolutional layers to get the state from the screen
+images.
+
+\begin{figure}
+\centering
+\includegraphics{assets/atari-network.png}
+\caption{Deep Q-Learning Atari}
+\end{figure}
+
+I'll leave it as a challenge for you to use deep Q-learning to train an
+agent to play Atari games. Here's the original paper which will get you
+started: http://www.davidqiu.com:8888/research/nature14236.pdf.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

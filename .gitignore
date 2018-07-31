@@ -25,3 +25,5 @@ dog-project/lfw/*
 transfer-learning/flower_photos/LICENSE.txt
 transfer-learning/tensorflow_vgg/vgg16.npy
 reinforcement/gym/
+6.Deep_Reinforcement_Learning/gym/.dockerignore
+6.Deep_Reinforcement_Learning/gym/.travis.yml
