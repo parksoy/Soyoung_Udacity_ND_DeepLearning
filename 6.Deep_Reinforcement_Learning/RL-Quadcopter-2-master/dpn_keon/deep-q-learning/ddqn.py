@@ -10,7 +10,6 @@ from keras import backend as K
 
 EPISODES = 5000
 
-
 class DQNAgent:
     def __init__(self, state_size, action_size):
         self.state_size = state_size
@@ -36,8 +35,7 @@ class DQNAgent:
         model.add(Dense(24, input_dim=self.state_size, activation='relu'))
         model.add(Dense(24, activation='relu'))
         model.add(Dense(self.action_size, activation='linear'))
-        model.compile(loss=self._huber_loss,
-                      optimizer=Adam(lr=self.learning_rate))
+        model.compile(loss=self._huber_loss, optimizer=Adam(lr=self.learning_rate))
         return model
 
     def update_target_model(self):
@@ -88,7 +86,7 @@ if __name__ == "__main__":
         state = env.reset()
         state = np.reshape(state, [1, state_size])
         for time in range(500):
-            # env.render()
+            env.render()
             action = agent.act(state)
             next_state, reward, done, _ = env.step(action)
             reward = reward if not done else -10
@@ -97,8 +95,8 @@ if __name__ == "__main__":
             state = next_state
             if done:
                 agent.update_target_model()
-                print("episode: {}/{}, score: {}, e: {:.2}"
-                      .format(e, EPISODES, time, agent.epsilon))
+                print("episode: {}/{}, score: {}, epsilon: {:.2}".format(e, EPISODES, time, agent.epsilon))
+                print("state, action, reward, next_state, done=", state, action, reward, next_state, done)
                 break
             if len(agent.memory) > batch_size:
                 agent.replay(batch_size)
