@@ -24,6 +24,15 @@ class ReplayBuffer:
         e = self.experience(state, action, reward, next_state, done)
         self.memory.append(e)
 
+    def sample(self, batch_size=64):
+        """Randomly sample a batch of experiences from memory."""
+        return random.sample(self.memory, k=self.batch_size)
+
+    def __len__(self):
+        """Return the current size of internal memory."""
+        return len(self.memory)
+
+
 class Actor:
     """Actor (Policy) Model."""
 
@@ -202,6 +211,9 @@ class DDPG_agent():
         self.gamma = 0.99  # discount factor
         self.tau = 0.01  # for soft update of target parameters
 
+    def count(dq, item):
+        return sum(elem == item for elem in dq)
+
     def reset_episode(self):
         self.noise.reset()
         state = self.task.reset()
@@ -213,7 +225,20 @@ class DDPG_agent():
         self.memory.add(self.last_state, action, reward, next_state, done)
 
         # Learn, if enough samples are available in memory
-        if len(self.memory) > self.batch_size:
+        #print("self.last_state, action, reward, next_state, done", self.last_state, action, reward, next_state, done)
+        '''
+        self.last_state=[ 0.  0. 10.  0.  0.  0.  0.  0. 10.  0.  0.  0.  0.  0. 10.  0.  0.  0.]
+        action=[92.39231369960082, 661.6747896343734, 83.77351324905818, 773.7055066261177]
+        reward=2.2847793875280247
+        next_state=[ 0.00000000e+00  0.00000000e+00  1.00012006e+01  3.66479092e+00
+                      1.92959092e+00  0.00000000e+00 -2.96110886e-03  5.54899918e-04
+                      1.00026016e+01  1.01268179e+00  3.86486176e+00  0.00000000e+00
+                     -6.79051519e-03 -3.45867349e-04  9.99978543e+00  4.44396665e+00
+                      5.74106807e+00  0.00000000e+00]
+        done=False
+        '''
+
+        if len(self.memory) > self.batch_size: #fixed ERROR: object of type 'ReplayBuffer' has no len()
             experiences = self.memory.sample()
             self.learn(experiences)
 
@@ -261,3 +286,60 @@ class DDPG_agent():
 
         new_weights = self.tau * local_weights + (1 - self.tau) * target_weights
         target_model.set_weights(new_weights)
+
+import numpy as np
+from task import Task
+
+class PolicySearch_Agent():
+    def __init__(self, task):
+        # Task (environment) information
+        self.task = task
+        self.state_size = task.state_size
+        self.action_size = task.action_size
+        self.action_low = task.action_low
+        self.action_high = task.action_high
+        self.action_range = self.action_high - self.action_low
+
+        self.w = np.random.normal(
+            size=(self.state_size, self.action_size),  # weights for simple linear policy: state_space x action_space
+            scale=(self.action_range / (2 * self.state_size))) # start producing actions in a decent range
+
+        # Score tracker and learning parameters
+        self.best_w = None
+        self.best_score = -np.inf
+        self.noise_scale = 0.1
+
+        # Episode variables
+        self.reset_episode()
+
+    def reset_episode(self):
+        self.total_reward = 0.0
+        self.count = 0
+        state = self.task.reset()
+        return state
+
+    def step(self, reward, done):
+        # Save experience / reward
+        self.total_reward += reward
+        self.count += 1
+
+        # Learn, if at end of episode
+        if done:
+            self.learn()
+
+    def act(self, state):
+        # Choose action based on given state and policy
+        action = np.dot(state, self.w)  # simple linear policy
+        return action
+
+    def learn(self):
+        # Learn by random policy search, using a reward-based score
+        self.score = self.total_reward / float(self.count) if self.count else 0.0
+        if self.score > self.best_score:
+            self.best_score = self.score
+            self.best_w = self.w
+            self.noise_scale = max(0.5 * self.noise_scale, 0.01)
+        else:
+            self.w = self.best_w
+            self.noise_scale = min(2.0 * self.noise_scale, 3.2)
+        self.w = self.w + self.noise_scale * np.random.normal(size=self.w.shape)  # equal noise in all directions
